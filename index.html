@@ -125,7 +125,8 @@ h1 {
   transform: scale(.97);
 }
 
-.photo {
+.photo,
+.final-photo {
   width: 100%;
   aspect-ratio: 1;
   border-radius: 15px;
@@ -173,16 +174,7 @@ h1 {
 }
 
 .final-photo {
-  width: 100%;
-  aspect-ratio: 1;
-  border-radius: 13px;
-  background: linear-gradient(135deg,#f1e7ed,#e4d5de);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #a36b88;
   font-size: 25px;
-  font-weight: bold;
 }
 
 .final-number {
@@ -230,7 +222,7 @@ h1 {
 
   <div class="note">
     4人の中から好きな2人を選んでね。<br>
-    同じメンバーが何度も登場するよ！
+    選んだ人ほど、また登場するかも…？💗
   </div>
 
   <button class="start-button" onclick="startGame()">
@@ -357,6 +349,11 @@ const members = [
 const ROUND1_GAMES = 30;
 const ROUND2_GAMES = 20;
 
+
+/* =====================================
+   GAME VARIABLES
+===================================== */
+
 let round = 1;
 let gameNumber = 0;
 
@@ -365,7 +362,14 @@ let selected = [];
 
 let votes = {};
 
-let previousGroupNames = [];
+let round1Appearance = {};
+let round1Selected = {};
+
+let round1Queue = [];
+let round2Queue = [];
+
+let finalists = [];
+let finalIndex = 0;
 
 
 /* =====================================
@@ -399,16 +403,27 @@ function startGame() {
   round = 1;
   gameNumber = 0;
 
+  currentCandidates = [];
   selected = [];
 
-  currentCandidates = [];
+  round1Queue = [];
+  round2Queue = [];
 
-  previousGroupNames = [];
+  finalists = [];
+  finalIndex = 0;
 
   votes = {};
+  round1Appearance = {};
+  round1Selected = {};
 
   members.forEach(member => {
+
     votes[member.name] = 0;
+
+    round1Appearance[member.name] = 0;
+
+    round1Selected[member.name] = 0;
+
   });
 
 
@@ -425,163 +440,128 @@ function startGame() {
     .classList.add("active");
 
 
+  createRound1Schedule();
+
   showNextGame();
 
 }
 
 
 /* =====================================
-   RANDOM 4
+   ROUND 1 SCHEDULE
 ===================================== */
 
-function getRandomFour(pool) {
+function createRound1Schedule() {
 
-  let candidates = [...pool];
+  /*
+    47人 × 2回 = 94登場枠
 
-  let chosen = [];
+    30ゲーム × 4人 = 120登場枠
+
+    まず全員2回ずつ確保。
+    残り26枠は、
+    選ばれた人を優先して追加する。
+  */
+
+  let queue = [];
+
+
+  members.forEach(member => {
+
+    queue.push(member);
+    queue.push(member);
+
+  });
 
 
   /*
-    同じ4人が連続で出るのを避ける
+    最低2回分をシャッフル
   */
 
-  for(let attempt = 0; attempt < 30; attempt++) {
-
-    chosen = shuffle(candidates).slice(0,4);
-
-    const names =
-      chosen
-        .map(person => person.name)
-        .sort()
-        .join("|");
+  queue = shuffle(queue);
 
 
-    if(names !== previousGroupNames.join("|")) {
+  /*
+    選ばれた人を追加する枠は、
+    実際にROUND1で選ばれた後に
+    動的に追加する。
+  */
 
-      previousGroupNames =
-        names.split("|");
-
-      return chosen;
-
-    }
-
-  }
-
-
-  chosen =
-    shuffle(candidates).slice(0,4);
-
-
-  previousGroupNames =
-    chosen
-      .map(person => person.name)
-      .sort();
-
-
-  return chosen;
+  round1Queue = queue;
 
 }
 
 
 /* =====================================
-   WEIGHTED RANDOM 4
+   GET ROUND 1 GROUP
 ===================================== */
 
-function getWeightedFour(pool) {
+function getRound1Group() {
 
-  let available = [...pool];
+  /*
+    まず、まだ2回出ていない人を優先。
+  */
 
-  let result = [];
-
-
-  while(
-    result.length < 4 &&
-    available.length > 0
-  ) {
-
-    let totalWeight = 0;
-
-
-    available.forEach(member => {
-
-      /*
-        ROUND 1で1票なら重み2
-        5票なら重み6
-
-        票が多い人ほど出やすいが、
-        票0の人も重み1で登場できる
-      */
-
-      totalWeight +=
-        votes[member.name] + 1;
-
-    });
-
-
-    let random =
-      Math.random() * totalWeight;
-
-
-    let selectedMember = null;
-
-
-    for(
-      const member of available
-    ) {
-
-      random -=
-        votes[member.name] + 1;
-
-
-      if(random <= 0) {
-
-        selectedMember = member;
-
-        break;
-
-      }
-
-    }
-
-
-    if(selectedMember) {
-
-      result.push(selectedMember);
-
-      available =
-        available.filter(
-          member =>
-            member.name !== selectedMember.name
-        );
-
-    }
-
-  }
+  let needsAppearance =
+    members.filter(member =>
+      round1Appearance[member.name] < 2
+    );
 
 
   /*
-    同じ4人の連続を避ける
+    残り枠がある場合、
+    すでに選ばれている人を追加候補にする。
   */
 
-  const names =
-    result
-      .map(person => person.name)
-      .sort();
+  let pool = [...needsAppearance];
 
 
-  if(
-    names.join("|") ===
-    previousGroupNames.join("|")
-  ) {
+  /*
+    追加登場できる人を入れる。
+    選択数が多い人ほど候補になりやすい。
+  */
 
-    return getWeightedFour(pool);
+  const selectedPeople =
+    members.filter(member =>
+      round1Selected[member.name] > 0
+    );
 
-  }
+
+  selectedPeople.forEach(member => {
+
+    /*
+      選ばれた回数に応じて
+      最大3回程度まで追加候補にする。
+    */
+
+    const extra =
+      Math.min(
+        round1Selected[member.name],
+        2
+      );
+
+    for(let i = 0; i < extra; i++) {
+
+      pool.push(member);
+
+    }
+
+  });
 
 
-  previousGroupNames = names;
+  /*
+    重複人物を除く
+  */
 
-  return result;
+  const uniquePool =
+    [...new Map(
+      pool.map(member =>
+        [member.name, member]
+      )
+    ).values()];
+
+
+  return shuffle(uniquePool).slice(0,4);
 
 }
 
@@ -598,12 +578,24 @@ function showNextGame() {
   if(round === 1) {
 
     currentCandidates =
-      getRandomFour(members);
+      getRound1Group();
 
-  } else {
+  }
+
+  else if(round === 2) {
 
     currentCandidates =
-      getWeightedFour(currentCandidatesPool);
+      getRound2Group();
+
+  }
+
+  else {
+
+    currentCandidates =
+      finalists.slice(
+        finalIndex * 2,
+        finalIndex * 2 + 2
+      );
 
   }
 
@@ -617,22 +609,54 @@ function showNextGame() {
     .style.display = "none";
 
 
-  const totalGames =
-    round === 1
-      ? ROUND1_GAMES
-      : ROUND2_GAMES;
+  let totalGames;
+
+  if(round === 1) {
+
+    totalGames = ROUND1_GAMES;
+
+  }
+
+  else if(round === 2) {
+
+    totalGames = ROUND2_GAMES;
+
+  }
+
+  else {
+
+    totalGames = 9;
+
+  }
 
 
-  document
-    .getElementById("progress")
-    .textContent =
+  if(round === 3) {
+
+    document
+      .getElementById("progress")
+      .textContent =
+      `FINAL　${finalIndex + 1} / 9`;
+
+    document
+      .getElementById("question")
+      .textContent =
+      "この2人から、顔が好きな1人を選んでね♡";
+
+  }
+
+  else {
+
+    document
+      .getElementById("progress")
+      .textContent =
       `ROUND ${round}　${gameNumber + 1} / ${totalGames}`;
 
-
-  document
-    .getElementById("question")
-    .textContent =
+    document
+      .getElementById("question")
+      .textContent =
       "この4人から好きな2人を選んでね♡";
+
+  }
 
 
   currentCandidates.forEach(
@@ -682,6 +706,171 @@ function showNextGame() {
 
 
 /* =====================================
+   ROUND 2 SCHEDULE
+===================================== */
+
+function createRound2Schedule() {
+
+  let selectedPeople =
+    members.filter(member =>
+      round1Selected[member.name] > 0
+    );
+
+
+  let neverSelected =
+    members.filter(member =>
+      round1Selected[member.name] === 0
+    );
+
+
+  /*
+    ROUND 1で選ばれた人を基本候補にする。
+    ただし、選ばれていない人も
+    全員最低1回は登場させる。
+  */
+
+  let queue = [];
+
+
+  /*
+    まず全員1回
+  */
+
+  members.forEach(member => {
+
+    queue.push(member);
+
+  });
+
+
+  /*
+    残りの枠は選ばれた人を追加。
+    選ばれた回数が多いほど多く追加する。
+  */
+
+  selectedPeople.forEach(member => {
+
+    const extra =
+      Math.min(
+        3,
+        round1Selected[member.name]
+      );
+
+    for(let i = 0; i < extra; i++) {
+
+      queue.push(member);
+
+    }
+
+  });
+
+
+  /*
+    80枠に収める
+  */
+
+  round2Queue =
+    shuffle(queue);
+
+
+  while(round2Queue.length < ROUND2_GAMES * 4) {
+
+    if(selectedPeople.length > 0) {
+
+      const weighted =
+        shuffle(selectedPeople);
+
+      weighted.forEach(member => {
+
+        if(round2Queue.length <
+          ROUND2_GAMES * 4) {
+
+          round2Queue.push(member);
+
+        }
+
+      });
+
+    } else {
+
+      break;
+
+    }
+
+  }
+
+
+  round2Queue =
+    round2Queue.slice(
+      0,
+      ROUND2_GAMES * 4
+    );
+
+}
+
+
+/* =====================================
+   GET ROUND 2 GROUP
+===================================== */
+
+function getRound2Group() {
+
+  /*
+    キューから4人ずつ取り出す。
+
+    同じ人が同じ4人の中に
+    2回入らないようにする。
+  */
+
+  let group = [];
+
+
+  while(group.length < 4) {
+
+    if(round2Queue.length === 0) {
+
+      /*
+        万一キューがなくなったら
+        選ばれた人から補充。
+      */
+
+      const selectedPeople =
+        members.filter(member =>
+          round1Selected[member.name] > 0
+        );
+
+
+      round2Queue =
+        shuffle(selectedPeople);
+
+    }
+
+
+    const next =
+      round2Queue.shift();
+
+
+    if(
+      next &&
+      !group.some(
+        member =>
+          member.name === next.name
+      )
+    ) {
+
+      group.push(next);
+
+    }
+
+  }
+
+
+  return group;
+
+}
+
+
+/* =====================================
    SELECT
 ===================================== */
 
@@ -698,13 +887,20 @@ function toggleMember(element,index) {
       .classList
       .remove("selected");
 
-  } else {
+  }
 
-    if(selected.length >= 2) {
+  else {
+
+    const limit =
+      round === 3 ? 1 : 2;
+
+
+    if(selected.length >= limit) {
 
       return;
 
     }
+
 
     selected.push(index);
 
@@ -715,10 +911,14 @@ function toggleMember(element,index) {
   }
 
 
+  const required =
+    round === 3 ? 1 : 2;
+
+
   document
     .getElementById("nextButton")
     .style.display =
-      selected.length === 2
+      selected.length === required
         ? "block"
         : "none";
 
@@ -731,63 +931,42 @@ function toggleMember(element,index) {
 
 function confirmSelection() {
 
-  selected.forEach(index => {
-
-    const member =
-      currentCandidates[index];
-
-    votes[member.name]++;
-
-  });
-
-
-  gameNumber++;
-
-
-  const totalGames =
-    round === 1
-      ? ROUND1_GAMES
-      : ROUND2_GAMES;
-
-
-  if(gameNumber >= totalGames) {
-
-    finishRound();
-
-    return;
-
-  }
-
-
-  showNextGame();
-
-}
-
-
-/* =====================================
-   FINISH ROUND
-===================================== */
-
-let currentCandidatesPool = [];
-
-
-function finishRound() {
+  /*
+    ROUND 1
+  */
 
   if(round === 1) {
 
-    /*
-      ROUND 1の票数上位12人
-    */
+    selected.forEach(index => {
 
-    currentCandidatesPool =
-      getTopMembers(12);
+      const member =
+        currentCandidates[index];
+
+      votes[member.name]++;
+
+      round1Selected[member.name]++;
+
+    });
 
 
-    round = 2;
+    currentCandidates.forEach(member => {
 
-    gameNumber = 0;
+      round1Appearance[member.name]++;
 
-    previousGroupNames = [];
+    });
+
+
+    gameNumber++;
+
+
+    if(gameNumber >= ROUND1_GAMES) {
+
+      finishRound1();
+
+      return;
+
+    }
+
 
     showNextGame();
 
@@ -796,12 +975,69 @@ function finishRound() {
   }
 
 
+  /*
+    ROUND 2
+  */
+
   if(round === 2) {
 
-    const finalNine =
-      getTopMembers(9);
+    selected.forEach(index => {
 
-    showResult(finalNine);
+      const member =
+        currentCandidates[index];
+
+      votes[member.name]++;
+
+    });
+
+
+    gameNumber++;
+
+
+    if(gameNumber >= ROUND2_GAMES) {
+
+      finishRound2();
+
+      return;
+
+    }
+
+
+    showNextGame();
+
+    return;
+
+  }
+
+
+  /*
+    FINAL
+  */
+
+  if(round === 3) {
+
+    const winner =
+      currentCandidates[selected[0]];
+
+
+    finalists[
+      9 + finalIndex
+    ] = winner;
+
+
+    finalIndex++;
+
+
+    if(finalIndex >= 9) {
+
+      showFinalResult();
+
+      return;
+
+    }
+
+
+    showNextGame();
 
   }
 
@@ -809,30 +1045,69 @@ function finishRound() {
 
 
 /* =====================================
-   TOP MEMBERS
+   FINISH ROUND 1
 ===================================== */
 
-function getTopMembers(count) {
+function finishRound1() {
 
-  return [...members]
-    .sort((a,b) => {
+  /*
+    ROUND 1終了。
 
-      const difference =
-        votes[b.name] -
-        votes[a.name];
+    ここでROUND 2の
+    登場スケジュールを作る。
+  */
+
+  createRound2Schedule();
+
+  round = 2;
+
+  gameNumber = 0;
+
+  showNextGame();
+
+}
 
 
-      if(difference === 0) {
+/* =====================================
+   FINISH ROUND 2
+===================================== */
 
-        return Math.random() - 0.5;
+function finishRound2() {
 
-      }
+  /*
+    ROUND 2までの票を合計して
+    上位18人をFINALへ。
+  */
+
+  const top18 =
+    [...members]
+      .sort((a,b) => {
+
+        const difference =
+          votes[b.name] -
+          votes[a.name];
+
+        if(difference === 0) {
+
+          return Math.random() - 0.5;
+
+        }
+
+        return difference;
+
+      })
+      .slice(0,18);
 
 
-      return difference;
+  finalists = top18;
 
-    })
-    .slice(0,count);
+  finalIndex = 0;
+
+  round = 3;
+
+  gameNumber = 0;
+
+  showNextGame();
 
 }
 
@@ -841,7 +1116,22 @@ function getTopMembers(count) {
    FINAL RESULT
 ===================================== */
 
-function showResult(finalNine) {
+function showFinalResult() {
+
+  /*
+    finalistsの最初の9個を
+    最終9人として表示。
+
+    FINALで勝った人は
+    finalists[9]〜に入っているので、
+    そこから取り出す。
+  */
+
+  const winners =
+    finalists
+      .slice(9,18)
+      .filter(Boolean);
+
 
   document
     .getElementById("gameScreen")
@@ -864,20 +1154,19 @@ function showResult(finalNine) {
       7 8 9
   */
 
-
   const displayOrder = [
 
-    finalNine[3],
-    finalNine[4],
-    finalNine[5],
+    winners[3],
+    winners[4],
+    winners[5],
 
-    finalNine[1],
-    finalNine[0],
-    finalNine[2],
+    winners[1],
+    winners[0],
+    winners[2],
 
-    finalNine[6],
-    finalNine[7],
-    finalNine[8]
+    winners[6],
+    winners[7],
+    winners[8]
 
   ];
 
