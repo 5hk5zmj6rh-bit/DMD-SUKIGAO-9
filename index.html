@@ -17,7 +17,6 @@ body {
   min-height: 100vh;
   background: #fff9fc;
   color: #30252d;
-
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -132,13 +131,25 @@ h1 {
   width: 100%;
   aspect-ratio: 1;
   border-radius: 15px;
+  overflow: hidden;
   background: linear-gradient(135deg,#f1e7ed,#e4d5de);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: #a36b88;
   font-size: 35px;
   font-weight: bold;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
 }
 
 .member-name {
@@ -162,6 +173,7 @@ h1 {
 
 .final-grid {
   margin-top: 25px;
+
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 9px;
@@ -179,13 +191,25 @@ h1 {
   width: 100%;
   aspect-ratio: 1;
   border-radius: 13px;
+  overflow: hidden;
   background: linear-gradient(135deg,#f1e7ed,#e4d5de);
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   color: #a36b88;
   font-size: 25px;
   font-weight: bold;
+}
+
+.final-photo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
 }
 
 .final-number {
@@ -246,9 +270,7 @@ h1 {
 <main class="container">
 
 
-<!-- =========================
-     START
-========================= -->
+<!-- START -->
 
 <section id="startScreen" class="card screen active">
 
@@ -282,9 +304,7 @@ h1 {
 </section>
 
 
-<!-- =========================
-     GAME
-========================= -->
+<!-- GAME -->
 
 <section id="gameScreen" class="card screen">
 
@@ -315,9 +335,7 @@ h1 {
 </section>
 
 
-<!-- =========================
-     RESULT
-========================= -->
+<!-- RESULT -->
 
 <section id="resultScreen" class="card screen">
 
@@ -352,7 +370,6 @@ h1 {
 
 </section>
 
-
 </main>
 
 
@@ -360,12 +377,10 @@ h1 {
 
 
 /* =====================================
-   DMD MEMBERS
+   MEMBERS
 ===================================== */
 
 const members = [
-
-  /* GEN 1 */
 
   {name:"Max",gen:"Gen 1"},
   {name:"Zee",gen:"Gen 1"},
@@ -375,18 +390,12 @@ const members = [
   {name:"Jimmy",gen:"Gen 1"},
   {name:"Tommy",gen:"Gen 1"},
 
-
-  /* GEN 2 */
-
   {name:"NuNew",gen:"Gen 2"},
   {name:"Net",gen:"Gen 2"},
   {name:"Nat",gen:"Gen 2"},
   {name:"Yim",gen:"Gen 2"},
   {name:"Tutor",gen:"Gen 2"},
   {name:"James",gen:"Gen 2"},
-
-
-  /* GEN 3 */
 
   {name:"Tle",gen:"Gen 3"},
   {name:"Keng",gen:"Gen 3"},
@@ -398,9 +407,6 @@ const members = [
   {name:"Gems",gen:"Gen 3"},
   {name:"TeeTee",gen:"Gen 3"},
 
-
-  /* GEN 4 */
-
   {name:"Kim",gen:"Gen 4"},
   {name:"JJ",gen:"Gen 4"},
   {name:"Ohm",gen:"Gen 4"},
@@ -409,9 +415,6 @@ const members = [
   {name:"Patji",gen:"Gen 4"},
   {name:"Por",gen:"Gen 4"},
   {name:"Save",gen:"Gen 4"},
-
-
-  /* GEN 5 */
 
   {name:"Porsche",gen:"Gen 5"},
   {name:"Copper",gen:"Gen 5"},
@@ -422,9 +425,6 @@ const members = [
   {name:"Wave",gen:"Gen 5"},
   {name:"Fifa",gen:"Gen 5"},
   {name:"Pete",gen:"Gen 5"},
-
-
-  /* GEN 6 */
 
   {name:"Teddy",gen:"Gen 6"},
   {name:"Nick",gen:"Gen 6"},
@@ -439,17 +439,30 @@ const members = [
 
 
 /* =====================================
+   PHOTO FILES
+===================================== */
+
+const photoFiles = {
+
+  "Max": "IMG_8723.jpeg",
+
+  "Auau": "IMG_8725.jpeg",
+
+  "Tle": "IMG_8726.jpeg"
+
+};
+
+
+/* =====================================
    SETTINGS
 ===================================== */
 
 const ROUND1_GAMES = 30;
+
 const ROUND2_GAMES = 20;
+
 const ROUND3_GAMES = 15;
 
-/*
-  ROUND4は18人全員が6回ずつ登場
-  18 × 6 ÷ 2 = 54試合
-*/
 const ROUND4_GAMES = 54;
 
 
@@ -482,8 +495,6 @@ let round3Pool = [];
 let final18 = [];
 
 let finalMatchups = [];
-
-let finalWinners = [];
 
 
 /* =====================================
@@ -530,8 +541,6 @@ function startGame() {
 
   gameNumber = 0;
 
-  currentCandidates = [];
-
   selected = [];
 
   round2Pool = [];
@@ -541,8 +550,6 @@ function startGame() {
   final18 = [];
 
   finalMatchups = [];
-
-  finalWinners = [];
 
 
   votes = {};
@@ -640,7 +647,7 @@ function weightedRandomMember(pool, scoreObject) {
 
 
 /* =====================================
-   GET 4 PEOPLE
+   GET FOUR
 ===================================== */
 
 function getFourPeople(pool, scoreObject) {
@@ -691,13 +698,6 @@ function getFourPeople(pool, scoreObject) {
 
 function getRound1Group() {
 
-  /*
-    47人全員に最初のチャンス。
-
-    その後は、
-    選ばれた人ほど重みが増える。
-  */
-
   return getFourPeople(
     members,
     round1Selected
@@ -712,14 +712,6 @@ function getRound1Group() {
 
 function createRound2Pool() {
 
-  /*
-    ROUND1で選ばれた人を中心にする。
-
-    ただし47人全員を最低1回は
-    ROUND2に出すため、
-    全員を一度プールへ入れる。
-  */
-
   let pool = [];
 
 
@@ -730,13 +722,6 @@ function createRound2Pool() {
   });
 
 
-  /*
-    選ばれた人は追加。
-
-    たくさん選ばれた人ほど
-    プール内の重みが増える。
-  */
-
   members.forEach(member => {
 
     const count =
@@ -745,7 +730,7 @@ function createRound2Pool() {
 
     for(
       let i = 0;
-      i < Math.min(count, 4);
+      i < Math.min(count,4);
       i++
     ) {
 
@@ -785,13 +770,6 @@ function getRound2Group() {
 
 function createRound3Pool() {
 
-  /*
-    ROUND2の結果で上位24人を候補にする。
-
-    24人 × 15試合で
-    さらに絞る。
-  */
-
   return [...members]
     .sort((a,b) => {
 
@@ -829,12 +807,6 @@ function getRound3Group() {
   }
 
 
-  /*
-    ROUND1 + ROUND2で
-    選ばれた回数が多い人ほど
-    ROUND3で登場しやすい。
-  */
-
   let score = {};
 
 
@@ -856,16 +828,10 @@ function getRound3Group() {
 
 
 /* =====================================
-   MAKE FINAL 18
+   FINAL 18
 ===================================== */
 
 function createFinal18() {
-
-  /*
-    ROUND3までの総選択数。
-
-    上位18人がFINALへ。
-  */
 
   return [...members]
     .sort((a,b) => {
@@ -897,34 +863,17 @@ function createFinal18() {
 
 
 /* =====================================
-   ROUND 4 MATCHES
+   ROUND 4
 ===================================== */
 
 function createRound4Matches() {
-
-  /*
-    18人それぞれを6回ずつ登場させる。
-
-    18 × 6 = 108人分の登場枠
-    108 ÷ 2 = 54試合。
-
-    つまり全員同じ回数だけ
-    2人対決する。
-
-    ただし対戦相手は毎回
-    ランダム。
-  */
 
   let slots = [];
 
 
   final18.forEach(member => {
 
-    for(
-      let i = 0;
-      i < 6;
-      i++
-    ) {
+    for(let i = 0; i < 6; i++) {
 
       slots.push(member);
 
@@ -932,11 +881,6 @@ function createRound4Matches() {
 
   });
 
-
-  /*
-    自分自身との対決が起きないように
-    何度かシャッフルして調整。
-  */
 
   for(
     let attempt = 0;
@@ -971,11 +915,7 @@ function createRound4Matches() {
     }
 
 
-    if(valid) {
-
-      break;
-
-    }
+    if(valid) break;
 
   }
 
@@ -990,10 +930,8 @@ function createRound4Matches() {
   ) {
 
     matches.push([
-
       slots[i],
       slots[i + 1]
-
     ]);
 
   }
@@ -1052,10 +990,6 @@ function showNextGame() {
     .style.display = "none";
 
 
-  /*
-    ROUND4
-  */
-
   if(round === 4) {
 
     document
@@ -1095,10 +1029,6 @@ function showNextGame() {
   }
 
 
-  /*
-    メンバー表示
-  */
-
   currentCandidates.forEach(
     (member,index) => {
 
@@ -1121,10 +1051,20 @@ function showNextGame() {
         };
 
 
+      const photo =
+        photoFiles[member.name];
+
+
       element.innerHTML = `
 
         <div class="photo">
-          ${member.name.charAt(0)}
+
+          ${
+            photo
+              ? `<img src="${photo}" alt="${member.name}">`
+              : member.name.charAt(0)
+          }
+
         </div>
 
         <div class="member-name">
@@ -1215,10 +1155,6 @@ function toggleMember(
 function confirmSelection() {
 
 
-  /* ===============================
-     ROUND 1
-  =============================== */
-
   if(round === 1) {
 
     selected.forEach(index => {
@@ -1262,10 +1198,6 @@ function confirmSelection() {
 
   }
 
-
-  /* ===============================
-     ROUND 2
-  =============================== */
 
   if(round === 2) {
 
@@ -1311,10 +1243,6 @@ function confirmSelection() {
   }
 
 
-  /* ===============================
-     ROUND 3
-  =============================== */
-
   if(round === 3) {
 
     selected.forEach(index => {
@@ -1346,10 +1274,6 @@ function confirmSelection() {
         createFinal18();
 
 
-      /*
-        ROUND4の54試合を作る
-      */
-
       finalMatchups =
         createRound4Matches();
 
@@ -1367,10 +1291,6 @@ function confirmSelection() {
 
   }
 
-
-  /* ===============================
-     ROUND 4
-  =============================== */
 
   if(round === 4) {
 
@@ -1408,18 +1328,10 @@ function confirmSelection() {
 
 
 /* =====================================
-   FINAL RESULT
+   RESULT
 ===================================== */
 
 function showFinalResult() {
-
-  /*
-    ROUND4の勝利数で
-    18人をランキング。
-
-    全員6回ずつ登場しているので、
-    勝利数をそのまま比較できる。
-  */
 
   const ranking =
     [...final18]
@@ -1432,15 +1344,7 @@ function showFinalResult() {
           round4Wins[b.name];
 
 
-        if(
-          winsA === winsB
-        ) {
-
-          /*
-            同勝利数なら
-            ROUND1〜3の選択数で
-            タイブレーク
-          */
+        if(winsA === winsB) {
 
           const totalA =
             round1Selected[a.name] +
@@ -1470,17 +1374,9 @@ function showFinalResult() {
       });
 
 
-  /*
-    TOP9
-  */
-
   const top9 =
     ranking.slice(0,9);
 
-
-  /*
-    画面切り替え
-  */
 
   document
     .getElementById("gameScreen")
@@ -1492,15 +1388,6 @@ function showFinalResult() {
     .getElementById("resultScreen")
     .classList
     .add("active");
-
-
-  /*
-    9マス
-
-      4 5 6
-      2 1 3
-      7 8 9
-  */
 
 
   const displayOrder = [
@@ -1549,30 +1436,32 @@ function showFinalResult() {
         "final-card";
 
 
+      const photo =
+        photoFiles[member.name];
+
+
       card.innerHTML = `
 
         <div class="final-photo">
 
-          ${member.name.charAt(0)}
+          ${
+            photo
+              ? `<img src="${photo}" alt="${member.name}">`
+              : member.name.charAt(0)
+          }
 
         </div>
 
         <div class="final-number">
-
           ${numbers[index]}
-
         </div>
 
         <div class="final-name">
-
           ${member.name}
-
         </div>
 
         <div class="final-gen">
-
           ${member.gen}
-
         </div>
 
       `;
@@ -1583,10 +1472,6 @@ function showFinalResult() {
     }
   );
 
-
-  /*
-    1〜18位一覧
-  */
 
   const rankList =
     document.getElementById(
@@ -1611,21 +1496,15 @@ function showFinalResult() {
       row.innerHTML = `
 
         <div class="rank-number">
-
           ${index + 1}位
-
         </div>
 
         <div class="rank-name">
-
           ${member.name}
-
         </div>
 
         <div class="rank-wins">
-
           ${round4Wins[member.name]}勝
-
         </div>
 
       `;
