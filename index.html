@@ -1,1817 +1,816 @@
 <!DOCTYPE html>
-
 <html lang="ja">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>DMD SUKIGAO 9</title>
-
 <style>
-
 * {
-
   box-sizing: border-box;
-
 }
-
 body {
-
   margin: 0;
-
   min-height: 100vh;
-
-  background: #fff9fc;
-
+  background: #fff8fc;
   color: #30252d;
-
   font-family:
-
     -apple-system,
-
     BlinkMacSystemFont,
-
     "Hiragino Kaku Gothic ProN",
-
     "Yu Gothic",
-
     sans-serif;
-
 }
-
 .container {
-
-  width: 100%;
-
-  max-width: 720px;
-
+  width: min(100%, 900px);
   margin: 0 auto;
-
   padding: 30px 18px 50px;
-
-}
-
-.card {
-
-  background: white;
-
-  border: 1px solid #ead8e3;
-
-  border-radius: 30px;
-
-  padding: 30px 18px;
-
   text-align: center;
-
-  box-shadow: 0 8px 30px rgba(170,90,130,.08);
-
 }
-
-.screen {
-
-  display: none;
-
-}
-
-.screen.active {
-
-  display: block;
-
-}
-
-.small-title {
-
-  color: #a36b88;
-
-  font-size: 15px;
-
-  font-weight: bold;
-
-  letter-spacing: 3px;
-
-}
-
 h1 {
-
-  margin: 12px 0 0;
-
-  font-size: 34px;
-
-  line-height: 1.3;
-
+  margin: 10px 0 8px;
+  font-size: 30px;
+  letter-spacing: 1px;
 }
-
 .subtitle {
-
-  margin-top: 20px;
-
+  margin: 0 0 25px;
+  color: #9a8290;
+  font-size: 14px;
+}
+.screen {
+  display: none;
+}
+.screen.active {
+  display: block;
+}
+.start-box {
+  padding: 45px 20px;
+}
+.start-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.start-text {
+  color: #806d77;
   line-height: 1.8;
-
-  font-weight: bold;
-
+  margin-bottom: 30px;
 }
-
-.heart {
-
-  color: #e98ab5;
-
-}
-
-.start-button,
-
-.next-button,
-
-.retry-button {
-
-  width: 100%;
-
-  margin-top: 28px;
-
-  padding: 17px;
-
+button {
   border: none;
-
-  border-radius: 18px;
-
-  background: #b84f87;
-
+  cursor: pointer;
+  font-family: inherit;
+}
+.start-button,
+.retry-button {
+  background: #30252d;
   color: white;
-
-  font-size: 18px;
-
-  font-weight: bold;
-
-  cursor: pointer;
-
-}
-
-.start-button:active,
-
-.next-button:active,
-
-.retry-button:active {
-
-  transform: scale(.98);
-
-}
-
-.progress {
-
-  color: #a36b88;
-
-  font-size: 14px;
-
-  margin-bottom: 8px;
-
-}
-
-.question {
-
-  font-size: 20px;
-
-  font-weight: bold;
-
-  margin-bottom: 18px;
-
-}
-
-.members {
-
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 12px;
-
-}
-
-.member {
-
-  border: 3px solid transparent;
-
-  background: white;
-
-  border-radius: 20px;
-
-  padding: 10px;
-
-  box-shadow: 0 5px 18px rgba(0,0,0,.08);
-
-  cursor: pointer;
-
-  transition: .15s;
-
-}
-
-.member.selected {
-
-  border-color: #e98ab5;
-
-  background: #fff0f7;
-
-  transform: scale(.97);
-
-}
-
-.photo {
-
-  width: 100%;
-
-  aspect-ratio: 1;
-
-  border-radius: 15px;
-
-  overflow: hidden;
-
-  background: linear-gradient(135deg,#f1e7ed,#e4d5de);
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  color: #a36b88;
-
-  font-size: 35px;
-
-  font-weight: bold;
-
-}
-
-.photo img {
-
-  width: 100%;
-
-  height: 100%;
-
-  display: block;
-
-  object-fit: cover;
-
-  object-position: center;
-
-}
-
-.member-name {
-
-  margin-top: 9px;
-
-  font-weight: bold;
-
+  border-radius: 999px;
+  padding: 15px 45px;
   font-size: 17px;
-
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(48,37,45,0.15);
 }
-
-.member-gen {
-
-  margin-top: 3px;
-
-  color: #999;
-
-  font-size: 12px;
-
+.start-button:active,
+.retry-button:active {
+  transform: scale(0.97);
 }
-
-.note {
-
-  color: #aaa0a6;
-
-  font-size: 12px;
-
-  margin-top: 20px;
-
-  line-height: 1.7;
-
+.question {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 15px 0 20px;
 }
-
-.final-grid {
-
-  margin-top: 25px;
-
+.progress {
+  color: #a68d9a;
+  font-size: 13px;
+  margin-bottom: 18px;
+}
+.choices {
   display: grid;
-
-  grid-template-columns: repeat(3, 1fr);
-
-  gap: 9px;
-
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
 }
-
-.final-card {
-
+.choice {
   background: white;
-
-  border: 1px solid #ead8e3;
-
-  border-radius: 17px;
-
-  padding: 8px;
-
-  box-shadow: 0 5px 15px rgba(0,0,0,.08);
-
+  border: 2px solid #f0e3ea;
+  border-radius: 18px;
+  padding: 10px;
+  transition: 0.15s;
+  box-shadow: 0 3px 12px rgba(80,50,70,0.06);
 }
-
-.final-photo {
-
-  width: 100%;
-
-  aspect-ratio: 1;
-
-  border-radius: 13px;
-
-  overflow: hidden;
-
-  background: linear-gradient(135deg,#f1e7ed,#e4d5de);
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  color: #a36b88;
-
-  font-size: 25px;
-
-  font-weight: bold;
-
+.choice:hover {
+  border-color: #d7b9ca;
+  transform: translateY(-2px);
 }
-
-.final-photo img {
-
-  width: 100%;
-
-  height: 100%;
-
+.choice:active {
+  transform: scale(0.98);
+}
+.choice img {
   display: block;
-
+  width: 100%;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-
-  object-position: center;
-
+  border-radius: 13px;
+  background: #f5edf2;
 }
-
-.final-number {
-
-  color: #a36b88;
-
-  font-size: 12px;
-
+.choice-name {
+  font-size: 16px;
   font-weight: bold;
-
-  margin-top: 6px;
-
+  margin: 10px 0 4px;
 }
-
-.final-name {
-
+.choice-number {
+  color: #b49daa;
+  font-size: 11px;
+}
+.duel-title {
+  font-size: 23px;
   font-weight: bold;
-
-  font-size: 14px;
-
+  margin: 12px 0 8px;
+}
+.duel-subtitle {
+  color: #9a8290;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+.duel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.duel-card {
+  background: white;
+  border: 2px solid #f0e3ea;
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: 0 4px 15px rgba(80,50,70,0.07);
+  transition: 0.15s;
+}
+.duel-card:hover {
+  border-color: #d7b9ca;
+  transform: translateY(-2px);
+}
+.duel-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 15px;
+  background: #f5edf2;
+}
+.duel-name {
+  font-weight: bold;
+  font-size: 18px;
+  margin-top: 11px;
+}
+.duel-number {
+  color: #b49daa;
+  font-size: 11px;
   margin-top: 3px;
-
-  word-break: break-word;
-
 }
-
-.final-gen {
-
-  color: #999;
-
-  font-size: 10px;
-
-  margin-top: 2px;
-
-}
-
-.rank-list {
-
-  margin-top: 25px;
-
-  text-align: left;
-
-}
-
-.rank-row {
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
-
-  padding: 9px 5px;
-
-  border-bottom: 1px solid #f0e4eb;
-
-}
-
-.rank-number {
-
-  width: 30px;
-
+.result-title {
+  font-size: 27px;
   font-weight: bold;
-
-  color: #a36b88;
-
+  margin-bottom: 8px;
 }
-
-.rank-name {
-
-  flex: 1;
-
+.result-subtitle {
+  color: #9a8290;
+  margin-bottom: 25px;
+}
+.final-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 13px;
+  margin-bottom: 30px;
+}
+.final-card {
+  background: white;
+  border-radius: 18px;
+  padding: 9px;
+  box-shadow: 0 4px 15px rgba(80,50,70,0.08);
+}
+.final-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 13px;
+  background: #f5edf2;
+}
+.final-rank {
+  font-size: 13px;
+  color: #b18c9f;
+  margin-top: 8px;
+}
+.final-name {
+  font-size: 15px;
   font-weight: bold;
-
+  margin-top: 3px;
 }
-
-.rank-wins {
-
-  color: #999;
-
+.notice {
+  min-height: 20px;
+  color: #b46f8f;
   font-size: 12px;
-
+  margin-top: 10px;
 }
-
+@media (max-width: 520px) {
+  .container {
+    padding: 22px 12px 40px;
+  }
+  h1 {
+    font-size: 25px;
+  }
+  .question {
+    font-size: 18px;
+  }
+  .choices {
+    gap: 9px;
+  }
+  .choice {
+    border-radius: 14px;
+    padding: 7px;
+  }
+  .choice-name {
+    font-size: 14px;
+    margin-top: 7px;
+  }
+  .duel {
+    gap: 10px;
+  }
+  .duel-card {
+    padding: 8px;
+    border-radius: 15px;
+  }
+  .duel-name {
+    font-size: 15px;
+  }
+  .final-grid {
+    gap: 8px;
+  }
+  .final-card {
+    padding: 6px;
+    border-radius: 13px;
+  }
+  .final-name {
+    font-size: 13px;
+  }
+}
 </style>
-
 </head>
-
 <body>
-
-<main class="container">
-
-<section id="startScreen" class="card screen active">
-
-  <div class="small-title">
-
-    DMD SUKIGAO 9
-
-  </div>
-
-  <h1>
-
-    DMD<br>
-
-    好き顔9選メーカー
-
-  </h1>
-
-  <div class="subtitle">
-
-    DMDメンバーから<br>
-
-    「顔が好き」TOP9を決めよう
-
-    <span class="heart">💗</span>
-
-  </div>
-
-  <div class="note">
-
-    直感で選んでね。<br>
-
-    同じ人が何度も登場することもあるよ♡
-
-  </div>
-
-  <button class="start-button" onclick="startGame()">
-
-    はじめる 💗
-
-  </button>
-
-</section>
-
-<section id="gameScreen" class="card screen">
-
-  <div id="progress" class="progress"></div>
-
-  <div id="question" class="question"></div>
-
-  <div id="members" class="members"></div>
-
-  <button
-
-    id="nextButton"
-
-    class="next-button"
-
-    onclick="confirmSelection()"
-
-    style="display:none;"
-
-  >
-
-    決定 💗
-
-  </button>
-
-</section>
-
-<section id="resultScreen" class="card screen">
-
-  <div class="small-title">
-
-    DMD SUKIGAO 9
-
-  </div>
-
-  <h1>
-
-    好き顔9 💗
-
-  </h1>
-
-  <div class="subtitle">
-
-    あなたのTOP9！
-
-  </div>
-
-  <div id="resultGrid" class="final-grid"></div>
-
-  <div id="rankList" class="rank-list"></div>
-
-  <button class="retry-button" onclick="startGame()">
-
-    もう一回やる
-
-  </button>
-
-</section>
-
-</main>
-
+<div class="container">
+  <h1>DMD SUKIGAO 9</h1>
+  <p class="subtitle">あなたの好きな9人を決めよう♡</p>
+  <!-- START -->
+  <section id="startScreen" class="screen active">
+    <div class="start-box">
+      <div class="start-title">
+        DMDの中で<br>
+        あなたの好きな9人は？
+      </div>
+      <p class="start-text">
+        まずは4人の中から<br>
+        一番好きな人を選んでね♡
+      </p>
+      <button class="start-button" onclick="startGame()">
+        はじめる
+      </button>
+    </div>
+  </section>
+  <!-- FOUR CHOICES -->
+  <section id="choiceScreen" class="screen">
+    <div class="progress" id="choiceProgress"></div>
+    <div class="question">
+      この4人の中で一番好きなのは？
+    </div>
+    <div id="choices" class="choices"></div>
+    <div id="choiceNotice" class="notice"></div>
+  </section>
+  <!-- DUEL -->
+  <section id="duelScreen" class="screen">
+    <div class="duel-title" id="duelTitle">
+      FINAL DUEL
+    </div>
+    <div class="duel-subtitle" id="duelSubtitle">
+      より好きな方を選んでね♡
+    </div>
+    <div id="duelChoices" class="duel"></div>
+  </section>
+  <!-- RESULT -->
+  <section id="resultScreen" class="screen">
+    <div class="result-title">
+      YOUR SUKIGAO 9 ♡
+    </div>
+    <div class="result-subtitle">
+      あなたが選んだ9人
+    </div>
+    <div id="finalGrid" class="final-grid"></div>
+    <button class="retry-button" onclick="location.reload()">
+      もう一度やる
+    </button>
+  </section>
+</div>
 <script>
-
+/* =========================================================
+   DMD MEMBERS
+   GitHubにある実際のファイル名をそのまま指定
+========================================================= */
 const members = [
-
-  {name:"Max",gen:"Gen 1"},
-
-  {name:"Zee",gen:"Gen 1"},
-
-  {name:"Poppy",gen:"Gen 1"},
-
-  {name:"Park",gen:"Gen 1"},
-
-  {name:"Mark",gen:"Gen 1"},
-
-  {name:"Jimmy",gen:"Gen 1"},
-
-  {name:"Tommy",gen:"Gen 1"},
-
-  {name:"NuNew",gen:"Gen 2"},
-
-  {name:"Net",gen:"Gen 2"},
-
-  {name:"Nat",gen:"Gen 2"},
-
-  {name:"Yim",gen:"Gen 2"},
-
-  {name:"Tutor",gen:"Gen 2"},
-
-  {name:"James",gen:"Gen 2"},
-
-  {name:"Tle",gen:"Gen 3"},
-
-  {name:"Keng",gen:"Gen 3"},
-
-  {name:"FirstOne",gen:"Gen 3"},
-
-  {name:"Latte",gen:"Gen 3"},
-
-  {name:"Thomas",gen:"Gen 3"},
-
-  {name:"Namping",gen:"Gen 3"},
-
-  {name:"Kong",gen:"Gen 3"},
-
-  {name:"Gems",gen:"Gen 3"},
-
-  {name:"TeeTee",gen:"Gen 3"},
-
-  {name:"Kim",gen:"Gen 4"},
-
-  {name:"JJ",gen:"Gen 4"},
-
-  {name:"Ohm",gen:"Gen 4"},
-
-  {name:"Auau",gen:"Gen 4"},
-
-  {name:"Ryujin",gen:"Gen 4"},
-
-  {name:"Patji",gen:"Gen 4"},
-
-  {name:"Por",gen:"Gen 4"},
-
-  {name:"Save",gen:"Gen 4"},
-
-  {name:"Porsche",gen:"Gen 5"},
-
-  {name:"Copper",gen:"Gen 5"},
-
-  {name:"Otto",gen:"Gen 5"},
-
-  {name:"Pung",gen:"Gen 5"},
-
-  {name:"North",gen:"Gen 5"},
-
-  {name:"Phupha",gen:"Gen 5"},
-
-  {name:"Wave",gen:"Gen 5"},
-
-  {name:"Fifa",gen:"Gen 5"},
-
-  {name:"Pete",gen:"Gen 5"},
-
-  {name:"Teddy",gen:"Gen 6"},
-
-  {name:"Nick",gen:"Gen 6"},
-
-  {name:"Nan",gen:"Gen 6"},
-
-  {name:"Ton",gen:"Gen 6"},
-
-  {name:"Reeonn",gen:"Gen 6"},
-
-  {name:"Few",gen:"Gen 6"},
-
-  {name:"Thee",gen:"Gen 6"},
-
-  {name:"JT",gen:"Gen 6"}
-
+  {
+    name: "Max",
+    file: "IMG_8723.jpeg"
+  },
+  {
+    name: "Zee",
+    file: "しー.jpg"
+  },
+  {
+    name: "Poppy",
+    file: "ぽぴー.jpg"
+  },
+  {
+    name: "Park",
+    file: "ぱーく.jpg"
+  },
+  {
+    name: "Mark",
+    file: "まーく.jpg"
+  },
+  {
+    name: "Jimmy",
+    file: "じみー.jpg"
+  },
+  {
+    name: "Tommy",
+    file: "とみー.jpg"
+  },
+  {
+    name: "NuNew",
+    file: "ぬぬ.jpg"
+  },
+  {
+    name: "Net",
+    file: "ねっと.jpg"
+  },
+  {
+    name: "Nat",
+    file: "なっと.jpg"
+  },
+  {
+    name: "Yim",
+    file: "いむ.jpg"
+  },
+  {
+    name: "Tutor",
+    file: "ちゅた.jpg"
+  },
+  {
+    name: "James",
+    file: "じぇーむず.jpg"
+  },
+  {
+    name: "Tle",
+    file: "IMG_8726.jpeg"
+  },
+  {
+    name: "Keng",
+    file: "けん.jpg"
+  },
+  {
+    name: "FirstOne",
+    file: "ふぁすわん.jpg"
+  },
+  {
+    name: "Latte",
+    file: "らて.jpg"
+  },
+  {
+    name: "Thomas",
+    file: "とーます.jpg"
+  },
+  {
+    name: "Namping",
+    file: "なんぴん.jpg"
+  },
+  {
+    name: "Kong",
+    file: "こん.jpg"
+  },
+  {
+    name: "Gems",
+    file: "じぇむず.jpg"
+  },
+  {
+    name: "TeeTee",
+    file: "てぃてぃ.jpg"
+  },
+  {
+    name: "Kim",
+    file: "きむ.jpg"
+  },
+  {
+    name: "JJ",
+    file: "じぇじぇ.jpg"
+  },
+  {
+    name: "Ohm",
+    file: "おむ.jpg"
+  },
+  {
+    name: "Auau",
+    file: "IMG_8725.jpeg"
+  },
+  {
+    name: "Ryujin",
+    file: "IMG_8694.jpeg"
+  },
+  {
+    name: "Patji",
+    file: "ぱっち.jpg"
+  },
+  {
+    name: "Por",
+    file: "ぽー.jpg"
+  },
+  {
+    name: "Save",
+    file: "せぶ.jpg"
+  },
+  {
+    name: "Porsche",
+    file: "ぽーしぇ.jpg"
+  },
+  {
+    name: "Copper",
+    file: "こぱ.jpg"
+  },
+  {
+    name: "Otto",
+    file: "おっとー.jpg"
+  },
+  {
+    name: "Pung",
+    file: "ぱん.jpg"
+  },
+  {
+    name: "North",
+    file: "のーす.jpg"
+  },
+  {
+    name: "Phupha",
+    file: "ぷーぱー.jpg"
+  },
+  {
+    name: "Wave",
+    file: "うぇーぶ.jpg"
+  },
+  {
+    name: "Fifa",
+    file: "ふぃふぁ.jpg"
+  },
+  {
+    name: "Pete",
+    file: "ぴーと.jpg"
+  },
+  {
+    name: "Teddy",
+    file: "てでぃー.jpg"
+  },
+  {
+    name: "Nick",
+    file: "にっく.jpg"
+  },
+  {
+    name: "Nan",
+    file: "なん.jpg"
+  },
+  {
+    name: "Ton",
+    file: "とん.jpg"
+  },
+  {
+    name: "Reeonn",
+    file: "Reeonn .jpg"
+  },
+  {
+    name: "Few",
+    file: "Few.jpg"
+  },
+  {
+    name: "Thee",
+    file: "Thee.jpg"
+  },
+  {
+    name: "JT",
+    file: "じぇーてぃー.jpg"
+  }
 ];
-
-const photoFiles = {
-
-  "Yim": "いむ.jpg",
-
-  "Auau": "うう.jpg",
-
-  "Wave": "うぇーぶ.jpg",
-
-  "Otto": "おっとー.jpg",
-
-  "Ohm": "おむ.jpg",
-
-  "Kim": "きむ.jpg",
-
-  "Keng": "けん.jpg",
-
-  "Copper": "こぱ.jpg",
-
-  "Kong": "こん.jpg",
-
-  "JJ": "じぇじぇ.jpg",
-
-  "Gems": "じぇむず.jpg",
-
-  "JT": "じぇーてぃー.jpg",
-
-  "James": "じぇーむず.jpg",
-
-  "Jimmy": "じみー.jpg",
-
-  "Zee": "しー.jpg",
-
-  "Save": "せぶ.jpg",
-
-  "Tutor": "ちゅた.jpg",
-
-  "TeeTee": "てぃてぃ.jpg",
-
-  "Teddy": "てでぃー.jpg",
-
-  "Tommy": "とみー.jpg",
-
-  "Tle": "とる.jpg",
-
-  "Ton": "とん.jpg",
-
-  "Thomas": "とーます.jpg",
-
-  "Nat": "なっと.jpg",
-
-  "Nan": "なん.jpg",
-
-  "Namping": "なんぴん.jpg",
-
-  "Nick": "にっく.jpg",
-
-  "NuNew": "ぬぬ.jpg",
-
-  "Net": "ねっと.jpg",
-
-  "North": "のーす.jpg",
-
-  "Patji": "ぱっち.jpg",
-
-  "Pung": "ぱん.jpg",
-
-  "Park": "ぱーく.jpg",
-
-  "Pete": "ぴーと.jpg",
-
-  "FirstOne": "ふぁすわん.jpg",
-
-  "Fifa": "ふぃふぁ.jpg",
-
-  "Phupha": "ぷーぱー.jpg",
-
-  "Poppy": "ぽぴー.jpg",
-
-  "Por": "ぽー.jpg",
-
-  "Porsche": "ぽーしぇ.jpg",
-
-  "Max": "まっくす.jpg",
-
-  "Mark": "まーく.jpg",
-
-  "Latte": "らて.jpg",
-
-  "Ryujin": "IMG_8694.jpeg",
-
-  "Few": "Few.jpg",
-
-  "Reeonn": "Reeonn .jpg",
-
-  "Thee": "Thee.jpg"
-
-};
-
-const ROUND1_GAMES = 30;
-
-const ROUND2_GAMES = 20;
-
-const ROUND3_GAMES = 15;
-
-const ROUND4_GAMES = 54;
-
-let round = 1;
-
-let gameNumber = 0;
-
-let currentCandidates = [];
-
-let selected = [];
-
-let votes = {};
-
-let round1Selected = {};
-
-let round2Selected = {};
-
-let round3Selected = {};
-
-let round4Wins = {};
-
-let round2Pool = [];
-
-let round3Pool = [];
-
-let final18 = [];
-
-let finalMatchups = [];
-
+/* =========================================================
+   GAME VARIABLES
+========================================================= */
+let currentChoices = [];
+let winners = [];
+let choiceRound = 0;
+let choiceTotal = 0;
+let duelQueue = [];
+let duelWinners = [];
+let duelLosers = [];
+let duelStage = 0;
+let duelIndex = 0;
+/* =========================================================
+   SCREEN
+========================================================= */
+function showScreen(id) {
+  document.querySelectorAll(".screen").forEach(screen => {
+    screen.classList.remove("active");
+  });
+  document.getElementById(id).classList.add("active");
+}
+/* =========================================================
+   RANDOMIZE
+========================================================= */
 function shuffle(array) {
-
-  const result = [...array];
-
-  for (
-
-    let i = result.length - 1;
-
-    i > 0;
-
-    i--
-
-  ) {
-
-    const j =
-
-      Math.floor(
-
-        Math.random() * (i + 1)
-
-      );
-
-    [
-
-      result[i],
-
-      result[j]
-
-    ] = [
-
-      result[j],
-
-      result[i]
-
-    ];
-
+  const copy = [...array];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
   }
-
-  return result;
-
+  return copy;
 }
-
+/* =========================================================
+   IMAGE URL
+========================================================= */
+function imagePath(file) {
+  /*
+    日本語ファイル名・スペース・特殊文字も
+    URLとして安全に扱う
+  */
+  return encodeURI(file);
+}
+/* =========================================================
+   START
+========================================================= */
 function startGame() {
-
-  round = 1;
-
-  gameNumber = 0;
-
-  selected = [];
-
-  round2Pool = [];
-
-  round3Pool = [];
-
-  final18 = [];
-
-  finalMatchups = [];
-
-  votes = {};
-
-  round1Selected = {};
-
-  round2Selected = {};
-
-  round3Selected = {};
-
-  round4Wins = {};
-
-  members.forEach(member => {
-
-    votes[member.name] = 0;
-
-    round1Selected[member.name] = 0;
-
-    round2Selected[member.name] = 0;
-
-    round3Selected[member.name] = 0;
-
-    round4Wins[member.name] = 0;
-
-  });
-
-  document
-
-    .getElementById("startScreen")
-
-    .classList.remove("active");
-
-  document
-
-    .getElementById("resultScreen")
-
-    .classList.remove("active");
-
-  document
-
-    .getElementById("gameScreen")
-
-    .classList.add("active");
-
-  showNextGame();
-
-}
-
-function weightedRandomMember(
-
-  pool,
-
-  scoreObject
-
-) {
-
-  let total = 0;
-
-  pool.forEach(member => {
-
-    total +=
-
-      (scoreObject[member.name] || 0)
-
-      + 1;
-
-  });
-
-  let random =
-
-    Math.random() * total;
-
-  for (const member of pool) {
-
-    random -=
-
-      (scoreObject[member.name] || 0)
-
-      + 1;
-
-    if (random <= 0) {
-
-      return member;
-
-    }
-
+  winners = [];
+  choiceRound = 0;
+  const shuffled = shuffle(members);
+  /*
+    47人を4人ずつに分ける。
+    47 ÷ 4
+    = 11グループ + 3人
+    → 12人が予選通過
+  */
+  currentChoices = [];
+  for (let i = 0; i < shuffled.length; i += 4) {
+    currentChoices.push(
+      shuffled.slice(i, i + 4)
+    );
   }
-
-  return pool[
-
-    Math.floor(
-
-      Math.random() * pool.length
-
-    )
-
-  ];
-
+  choiceTotal = currentChoices.length;
+  showNextChoice();
 }
-
-function getFourPeople(
-
-  pool,
-
-  scoreObject
-
-) {
-
-  let result = [];
-
-  let safety = 0;
-
-  while (
-
-    result.length < 4 &&
-
-    safety < 1000
-
-  ) {
-
-    safety++;
-
-    const person =
-
-      weightedRandomMember(
-
-        pool,
-
-        scoreObject
-
-      );
-
-    if (
-
-      person &&
-
-      !result.some(
-
-        x =>
-
-          x.name === person.name
-
+/* =========================================================
+   FOUR CHOICE ROUND
+========================================================= */
+function showNextChoice() {
+  if (choiceRound >= currentChoices.length) {
+    startFirstDuel();
+    return;
+  }
+  const group = currentChoices[choiceRound];
+  document.getElementById("choiceProgress").textContent =
+    `ROUND 1　${choiceRound + 1} / ${choiceTotal}`;
+  const choices = document.getElementById("choices");
+  choices.innerHTML = "";
+  group.forEach((member, index) => {
+    const button = document.createElement("button");
+    button.className = "choice";
+    button.innerHTML = `
+      <img
+        src="${imagePath(member.file)}"
+        alt="${member.name}"
+        onerror="imageError(this)"
+      >
+      <div class="choice-name">
+        ${member.name}
+      </div>
+      <div class="choice-number">
+        ${index + 1}
+      </div>
+    `;
+    button.onclick = () => {
+      winners.push(member);
+      choiceRound++;
+      showNextChoice();
+    };
+    choices.appendChild(button);
+  });
+  showScreen("choiceScreen");
+}
+/* =========================================================
+   IMAGE ERROR
+========================================================= */
+function imageError(img) {
+  img.style.background = "#f5edf2";
+  img.style.objectFit = "contain";
+  img.alt = "写真を読み込めませんでした";
+}
+/* =========================================================
+   FIRST DUEL
+========================================================= */
+function startFirstDuel() {
+  /*
+    予選で12人になっている
+  */
+  duelQueue = shuffle(winners);
+  duelWinners = [];
+  duelLosers = [];
+  duelStage = 1;
+  duelIndex = 0;
+  showDuel();
+}
+/* =========================================================
+   DUEL DISPLAY
+========================================================= */
+function showDuel() {
+  if (duelIndex >= duelQueue.length) {
+    finishDuelStage();
+    return;
+  }
+  const a = duelQueue[duelIndex];
+  const b = duelQueue[duelIndex + 1];
+  document.getElementById("duelTitle").textContent =
+    "12人 → 6人";
+  document.getElementById("duelSubtitle").textContent =
+    "この2人なら、どっちがより好き？♡";
+  const area = document.getElementById("duelChoices");
+  area.innerHTML = "";
+  [a, b].forEach(member => {
+    const button = document.createElement("button");
+    button.className = "duel-card";
+    button.innerHTML = `
+      <img
+        src="${imagePath(member.file)}"
+        alt="${member.name}"
+        onerror="imageError(this)"
+      >
+      <div class="duel-name">
+        ${member.name}
+      </div>
+      <div class="duel-number">
+        TAP TO CHOOSE
+      </div>
+    `;
+    button.onclick = () => {
+      duelWinners.push(member);
+      if (member === a) {
+        duelLosers.push(b);
+      } else {
+        duelLosers.push(a);
+      }
+      duelIndex += 2;
+      showDuel();
+    };
+    area.appendChild(button);
+  });
+  showScreen("duelScreen");
+}
+/* =========================================================
+   END OF 12 → 6
+========================================================= */
+function finishDuelStage() {
+  /*
+    6人の勝者ができた。
+    次に6人を3組で比較して
+    「さらに比較」する。
+  */
+  if (duelStage === 1) {
+    duelQueue = shuffle(duelWinners);
+    duelWinners = [];
+    duelIndex = 0;
+    duelStage = 2;
+    showSecondDuel();
+    return;
+  }
+  /*
+    6 → 3 が完成
+  */
+  if (duelStage === 2) {
+    createFinalNine();
+  }
+}
+/* =========================================================
+   SECOND DUEL
+========================================================= */
+function showSecondDuel() {
+  if (duelIndex >= duelQueue.length) {
+    finishDuelStage();
+    return;
+  }
+  const a = duelQueue[duelIndex];
+  const b = duelQueue[duelIndex + 1];
+  document.getElementById("duelTitle").textContent =
+    "さらに比較";
+  document.getElementById("duelSubtitle").textContent =
+    "最後の3人を選んでね♡";
+  const area = document.getElementById("duelChoices");
+  area.innerHTML = "";
+  [a, b].forEach(member => {
+    const button = document.createElement("button");
+    button.className = "duel-card";
+    button.innerHTML = `
+      <img
+        src="${imagePath(member.file)}"
+        alt="${member.name}"
+        onerror="imageError(this)"
+      >
+      <div class="duel-name">
+        ${member.name}
+      </div>
+      <div class="duel-number">
+        TAP TO CHOOSE
+      </div>
+    `;
+    button.onclick = () => {
+      duelWinners.push(member);
+      duelIndex += 2;
+      showSecondDuel();
+    };
+    area.appendChild(button);
+  });
+  showScreen("duelScreen");
+}
+/* =========================================================
+   FINAL 9
+========================================================= */
+function createFinalNine() {
+  /*
+    12 → 6 で勝った6人
+    その6人 → 3人
+    最終9人は
+    ・最初の6人
+    ・その中からさらに選ばれた3人
+    = 9人
+    にする。
+  */
+  const topSix = duelQueue;
+  const topThree = duelWinners;
+  const finalNine = [
+    ...topSix,
+    ...topThree
+  ];
+  /*
+    重複防止
+  */
+  const unique = [];
+  finalNine.forEach(member => {
+    if (!unique.some(x => x.name === member.name)) {
+      unique.push(member);
+    }
+  });
+  /*
+    万一9人未満になった場合の補充。
+    予選・対戦で選ばれなかった人から補充する。
+  */
+  if (unique.length < 9) {
+    const used = new Set(
+      unique.map(member => member.name)
+    );
+    const backup = shuffle(
+      members.filter(
+        member => !used.has(member.name)
       )
-
-    ) {
-
-      result.push(person);
-
-    }
-
-  }
-
-  return result;
-
-}
-
-function getRound1Group() {
-
-  return getFourPeople(
-
-    members,
-
-    round1Selected
-
-  );
-
-}
-
-function createRound2Pool() {
-
-  let pool = [];
-
-  members.forEach(member => {
-
-    pool.push(member);
-
-  });
-
-  members.forEach(member => {
-
-    const count =
-
-      round1Selected[member.name];
-
-    for (
-
-      let i = 0;
-
-      i < Math.min(count,4);
-
-      i++
-
-    ) {
-
-      pool.push(member);
-
-    }
-
-  });
-
-  return pool;
-
-}
-
-function getRound2Group() {
-
-  if (
-
-    round2Pool.length === 0
-
-  ) {
-
-    round2Pool =
-
-      createRound2Pool();
-
-  }
-
-  return getFourPeople(
-
-    round2Pool,
-
-    round1Selected
-
-  );
-
-}
-
-function createRound3Pool() {
-
-  return [...members]
-
-    .sort((a,b) => {
-
-      const scoreA =
-
-        round1Selected[a.name] +
-
-        round2Selected[a.name];
-
-      const scoreB =
-
-        round1Selected[b.name] +
-
-        round2Selected[b.name];
-
-      if (scoreA === scoreB) {
-
-        return Math.random() - 0.5;
-
-      }
-
-      return scoreB - scoreA;
-
-    })
-
-    .slice(0,24);
-
-}
-
-function getRound3Group() {
-
-  if (
-
-    round3Pool.length === 0
-
-  ) {
-
-    round3Pool =
-
-      createRound3Pool();
-
-  }
-
-  let score = {};
-
-  round3Pool.forEach(member => {
-
-    score[member.name] =
-
-      round1Selected[member.name] +
-
-      round2Selected[member.name];
-
-  });
-
-  return getFourPeople(
-
-    round3Pool,
-
-    score
-
-  );
-
-}
-
-function createFinal18() {
-
-  return [...members]
-
-    .sort((a,b) => {
-
-      const scoreA =
-
-        round1Selected[a.name] +
-
-        round2Selected[a.name] +
-
-        round3Selected[a.name];
-
-      const scoreB =
-
-        round1Selected[b.name] +
-
-        round2Selected[b.name] +
-
-        round3Selected[b.name];
-
-      if (scoreA === scoreB) {
-
-        return Math.random() - 0.5;
-
-      }
-
-      return scoreB - scoreA;
-
-    })
-
-    .slice(0,18);
-
-}
-
-function createRound4Matches() {
-
-  let slots = [];
-
-  final18.forEach(member => {
-
-    for (
-
-      let i = 0;
-
-      i < 6;
-
-      i++
-
-    ) {
-
-      slots.push(member);
-
-    }
-
-  });
-
-  for (
-
-    let attempt = 0;
-
-    attempt < 1000;
-
-    attempt++
-
-  ) {
-
-    slots = shuffle(slots);
-
-    let valid = true;
-
-    for (
-
-      let i = 0;
-
-      i < slots.length;
-
-      i += 2
-
-    ) {
-
-      if (
-
-        slots[i].name ===
-
-        slots[i + 1].name
-
-      ) {
-
-        valid = false;
-
-        break;
-
-      }
-
-    }
-
-    if (valid) break;
-
-  }
-
-  let matches = [];
-
-  for (
-
-    let i = 0;
-
-    i < slots.length;
-
-    i += 2
-
-  ) {
-
-    matches.push([
-
-      slots[i],
-
-      slots[i + 1]
-
-    ]);
-
-  }
-
-  return matches;
-
-}
-
-function showNextGame() {
-
-  selected = [];
-
-  if (round === 1) {
-
-    currentCandidates =
-
-      getRound1Group();
-
-  }
-
-  else if (round === 2) {
-
-    currentCandidates =
-
-      getRound2Group();
-
-  }
-
-  else if (round === 3) {
-
-    currentCandidates =
-
-      getRound3Group();
-
-  }
-
-  else {
-
-    currentCandidates =
-
-      finalMatchups[gameNumber];
-
-  }
-
-  document
-
-    .getElementById("members")
-
-    .innerHTML = "";
-
-  document
-
-    .getElementById("nextButton")
-
-    .style.display = "none";
-
-  if (round === 4) {
-
-    document
-
-      .getElementById("progress")
-
-      .textContent =
-
-      `FINAL　${gameNumber + 1} / ${ROUND4_GAMES}`;
-
-    document
-
-      .getElementById("question")
-
-      .textContent =
-
-      "この2人なら、顔が好きなのはどっち？♡";
-
-  }
-
-  else {
-
-    const total =
-
-      round === 1
-
-        ? ROUND1_GAMES
-
-        : round === 2
-
-          ? ROUND2_GAMES
-
-          : ROUND3_GAMES;
-
-    document
-
-      .getElementById("progress")
-
-      .textContent =
-
-      `ROUND ${round}　${gameNumber + 1} / ${total}`;
-
-    document
-
-      .getElementById("question")
-
-      .textContent =
-
-      "この4人から好きな2人を選んでね♡";
-
-  }
-
-  currentCandidates.forEach(
-
-    (member,index) => {
-
-      const element =
-
-        document.createElement("div");
-
-      element.className =
-
-        "member";
-
-      element.onclick =
-
-        function() {
-
-          toggleMember(
-
-            element,
-
-            index
-
-          );
-
-        };
-
-      const photo =
-
-        photoFiles[member.name];
-
-      element.innerHTML = `
-
-        <div class="photo">
-
-          ${
-
-            photo
-
-              ? `<img
-
-                  src="${photo}"
-
-                  alt="${member.name}"
-
-                  onerror="this.style.display='none';"
-
-                >`
-
-              : member.name.charAt(0)
-
-          }
-
-        </div>
-
-        <div class="member-name">
-
-          ${member.name}
-
-        </div>
-
-        <div class="member-gen">
-
-          ${member.gen}
-
-        </div>
-
-      `;
-
-      document
-
-        .getElementById("members")
-
-        .appendChild(element);
-
-    }
-
-  );
-
-}
-
-function toggleMember(
-
-  element,
-
-  index
-
-) {
-
-  const limit =
-
-    round === 4
-
-      ? 1
-
-      : 2;
-
-  if (
-
-    selected.includes(index)
-
-  ) {
-
-    selected =
-
-      selected.filter(
-
-        i => i !== index
-
-      );
-
-    element.classList.remove(
-
-      "selected"
-
     );
-
-  }
-
-  else {
-
-    if (
-
-      selected.length >= limit
-
-    ) {
-
-      return;
-
+    while (unique.length < 9 && backup.length > 0) {
+      unique.push(backup.shift());
     }
-
-    selected.push(index);
-
-    element.classList.add(
-
-      "selected"
-
-    );
-
   }
-
-  document
-
-    .getElementById("nextButton")
-
-    .style.display =
-
-      selected.length === limit
-
-        ? "block"
-
-        : "none";
-
+  showFinal(unique.slice(0, 9));
 }
-
-function confirmSelection() {
-
-  if (round === 1) {
-
-    selected.forEach(index => {
-
-      const member =
-
-        currentCandidates[index];
-
-      round1Selected[
-
-        member.name
-
-      ]++;
-
-      votes[
-
-        member.name
-
-      ]++;
-
-    });
-
-    gameNumber++;
-
-    if (
-
-      gameNumber >=
-
-      ROUND1_GAMES
-
-    ) {
-
-      round2Pool =
-
-        createRound2Pool();
-
-      round = 2;
-
-      gameNumber = 0;
-
-    }
-
-    showNextGame();
-
-    return;
-
-  }
-
-  if (round === 2) {
-
-    selected.forEach(index => {
-
-      const member =
-
-        currentCandidates[index];
-
-      round2Selected[
-
-        member.name
-
-      ]++;
-
-      votes[
-
-        member.name
-
-      ]++;
-
-    });
-
-    gameNumber++;
-
-    if (
-
-      gameNumber >=
-
-      ROUND2_GAMES
-
-    ) {
-
-      round3Pool =
-
-        createRound3Pool();
-
-      round = 3;
-
-      gameNumber = 0;
-
-    }
-
-    showNextGame();
-
-    return;
-
-  }
-
-  if (round === 3) {
-
-    selected.forEach(index => {
-
-      const member =
-
-        currentCandidates[index];
-
-      round3Selected[
-
-        member.name
-
-      ]++;
-
-      votes[
-
-        member.name
-
-      ]++;
-
-    });
-
-    gameNumber++;
-
-    if (
-
-      gameNumber >=
-
-      ROUND3_GAMES
-
-    ) {
-
-      final18 =
-
-        createFinal18();
-
-      finalMatchups =
-
-        createRound4Matches();
-
-      round = 4;
-
-      gameNumber = 0;
-
-    }
-
-    showNextGame();
-
-    return;
-
-  }
-
-  if (round === 4) {
-
-    const winner =
-
-      currentCandidates[
-
-        selected[0]
-
-      ];
-
-    round4Wins[
-
-      winner.name
-
-    ]++;
-
-    gameNumber++;
-
-    if (
-
-      gameNumber >=
-
-      ROUND4_GAMES
-
-    ) {
-
-      showFinalResult();
-
-      return;
-
-    }
-
-    showNextGame();
-
-  }
-
-}
-
-function showFinalResult() {
-
-  const ranking =
-
-    [...final18]
-
-      .sort((a,b) => {
-
-        const winsA =
-
-          round4Wins[a.name];
-
-        const winsB =
-
-          round4Wins[b.name];
-
-        if (
-
-          winsA === winsB
-
-        ) {
-
-          const totalA =
-
-            round1Selected[a.name] +
-
-            round2Selected[a.name] +
-
-            round3Selected[a.name];
-
-          const totalB =
-
-            round1Selected[b.name] +
-
-            round2Selected[b.name] +
-
-            round3Selected[b.name];
-
-          if (
-
-            totalA === totalB
-
-          ) {
-
-            return Math.random() - 0.5;
-
-          }
-
-          return totalB - totalA;
-
-        }
-
-        return winsB - winsA;
-
-      });
-
-  const top9 =
-
-    ranking.slice(0,9);
-
-  document
-
-    .getElementById("gameScreen")
-
-    .classList.remove("active");
-
-  document
-
-    .getElementById("resultScreen")
-
-    .classList.add("active");
-
-  const displayOrder = [
-
-    top9[3],
-
-    top9[4],
-
-    top9[5],
-
-    top9[1],
-
-    top9[0],
-
-    top9[2],
-
-    top9[6],
-
-    top9[7],
-
-    top9[8]
-
-  ];
-
-  const numbers = [
-
-    4,5,6,
-
-    2,1,3,
-
-    7,8,9
-
-  ];
-
-  const grid =
-
-    document.getElementById(
-
-      "resultGrid"
-
-    );
-
+/* =========================================================
+   RESULT
+========================================================= */
+function showFinal(finalNine) {
+  const grid = document.getElementById("finalGrid");
   grid.innerHTML = "";
-
- 
+  finalNine.forEach((member, index) => {
+    const card = document.createElement("div");
+    card.className = "final-card";
+    card.innerHTML = `
+      <img
+        src="${imagePath(member.file)}"
+        alt="${member.name}"
+        onerror="imageError(this)"
+      >
+      <div class="final-rank">
+        NO.${index + 1}
+      </div>
+      <div class="final-name">
+        ${member.name}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  showScreen("resultScreen");
+}
+</script>
+</body>
+</html>
