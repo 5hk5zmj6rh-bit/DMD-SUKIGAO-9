@@ -5,211 +5,226 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DMD SUKIGAO 9</title>
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  min-height:100vh;
-  background:#fff9fc;
-  color:#30252d;
-  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif
+* {
+  box-sizing: border-box;
 }
-.container{
-  width:100%;
-  max-width:720px;
-  margin:0 auto;
-  padding:30px 18px 50px
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #fff9fc;
+  color: #30252d;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Hiragino Kaku Gothic ProN",
+    "Yu Gothic",
+    sans-serif;
 }
-.card{
-  background:white;
-  border:1px solid #ead8e3;
-  border-radius:30px;
-  padding:30px 18px;
-  text-align:center;
-  box-shadow:0 8px 30px rgba(170,90,130,.08)
+.container {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 30px 18px 50px;
 }
-.screen{display:none}
-.screen.active{display:block}
-.small-title{
-  color:#a36b88;
-  font-size:15px;
-  font-weight:bold;
-  letter-spacing:3px
+.card {
+  background: white;
+  border: 1px solid #ead8e3;
+  border-radius: 30px;
+  padding: 30px 18px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(170,90,130,.08);
 }
-h1{
-  margin:12px 0 0;
-  font-size:34px;
-  line-height:1.3
+.screen {
+  display: none;
 }
-.subtitle{
-  margin-top:20px;
-  line-height:1.8;
-  font-weight:bold
+.screen.active {
+  display: block;
 }
-.heart{color:#e98ab5}
+.small-title {
+  color: #a36b88;
+  font-size: 15px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+h1 {
+  margin: 12px 0 0;
+  font-size: 34px;
+  line-height: 1.3;
+}
+.subtitle {
+  margin-top: 20px;
+  line-height: 1.8;
+  font-weight: bold;
+}
+.heart {
+  color: #e98ab5;
+}
 .start-button,
 .next-button,
-.retry-button{
-  width:100%;
-  margin-top:28px;
-  padding:17px;
-  border:none;
-  border-radius:18px;
-  background:#b84f87;
-  color:white;
-  font-size:18px;
-  font-weight:bold;
-  cursor:pointer
+.retry-button {
+  width: 100%;
+  margin-top: 28px;
+  padding: 17px;
+  border: none;
+  border-radius: 18px;
+  background: #b84f87;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
 }
 .start-button:active,
 .next-button:active,
-.retry-button:active{
-  transform:scale(.98)
+.retry-button:active {
+  transform: scale(.98);
 }
-.progress{
-  color:#a36b88;
-  font-size:14px;
-  margin-bottom:8px
+.progress {
+  color: #a36b88;
+  font-size: 14px;
+  margin-bottom: 8px;
 }
-.question{
-  font-size:20px;
-  font-weight:bold;
-  margin-bottom:18px
+.question {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 18px;
 }
-.members{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px
+.members {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
 }
-.member{
-  border:3px solid transparent;
-  background:white;
-  border-radius:20px;
-  padding:10px;
-  box-shadow:0 5px 18px rgba(0,0,0,.08);
-  cursor:pointer;
-  transition:.15s
+.member {
+  border: 3px solid transparent;
+  background: white;
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 0 5px 18px rgba(0,0,0,.08);
+  cursor: pointer;
+  transition: .15s;
 }
-.member.selected{
-  border-color:#e98ab5;
-  background:#fff0f7;
-  transform:scale(.97)
+.member.selected {
+  border-color: #e98ab5;
+  background: #fff0f7;
+  transform: scale(.97);
 }
-.photo{
-  width:100%;
-  aspect-ratio:1;
-  border-radius:15px;
-  overflow:hidden;
-  background:linear-gradient(135deg,#f1e7ed,#e4d5de);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#a36b88;
-  font-size:35px;
-  font-weight:bold
+.photo {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 15px;
+  overflow: hidden;
+  background: linear-gradient(135deg,#f1e7ed,#e4d5de);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a36b88;
+  font-size: 35px;
+  font-weight: bold;
 }
-.photo img{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  object-position:center
+.photo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
 }
-.member-name{
-  margin-top:9px;
-  font-weight:bold;
-  font-size:17px
+.member-name {
+  margin-top: 9px;
+  font-weight: bold;
+  font-size: 17px;
 }
-.member-gen{
-  margin-top:3px;
-  color:#999;
-  font-size:12px
+.member-gen {
+  margin-top: 3px;
+  color: #999;
+  font-size: 12px;
 }
-.note{
-  color:#aaa0a6;
-  font-size:12px;
-  margin-top:20px;
-  line-height:1.7
+.note {
+  color: #aaa0a6;
+  font-size: 12px;
+  margin-top: 20px;
+  line-height: 1.7;
 }
-.final-grid{
-  margin-top:25px;
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:9px
+.final-grid {
+  margin-top: 25px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
 }
-.final-card{
-  background:white;
-  border:1px solid #ead8e3;
-  border-radius:17px;
-  padding:8px;
-  box-shadow:0 5px 15px rgba(0,0,0,.08)
+.final-card {
+  background: white;
+  border: 1px solid #ead8e3;
+  border-radius: 17px;
+  padding: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,.08);
 }
-.final-photo{
-  width:100%;
-  aspect-ratio:1;
-  border-radius:13px;
-  overflow:hidden;
-  background:linear-gradient(135deg,#f1e7ed,#e4d5de);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  color:#a36b88;
-  font-size:25px;
-  font-weight:bold
+.final-photo {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 13px;
+  overflow: hidden;
+  background: linear-gradient(135deg,#f1e7ed,#e4d5de);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a36b88;
+  font-size: 25px;
+  font-weight: bold;
 }
-.final-photo img{
-  width:100%;
-  height:100%;
-  display:block;
-  object-fit:cover;
-  object-position:center
+.final-photo img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center;
 }
-.final-number{
-  color:#a36b88;
-  font-size:12px;
-  font-weight:bold;
-  margin-top:6px
+.final-number {
+  color: #a36b88;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 6px;
 }
-.final-name{
-  font-weight:bold;
-  font-size:14px;
-  margin-top:3px;
-  word-break:break-word
+.final-name {
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: 3px;
+  word-break: break-word;
 }
-.final-gen{
-  color:#999;
-  font-size:10px;
-  margin-top:2px
+.final-gen {
+  color: #999;
+  font-size: 10px;
+  margin-top: 2px;
 }
-.rank-list{
-  margin-top:25px;
-  text-align:left
+.rank-list {
+  margin-top: 25px;
+  text-align: left;
 }
-.rank-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:9px 5px;
-  border-bottom:1px solid #f0e4eb
+.rank-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 5px;
+  border-bottom: 1px solid #f0e4eb;
 }
-.rank-number{
-  width:30px;
-  font-weight:bold;
-  color:#a36b88
+.rank-number {
+  width: 30px;
+  font-weight: bold;
+  color: #a36b88;
 }
-.rank-name{
-  flex:1;
-  font-weight:bold
+.rank-name {
+  flex: 1;
+  font-weight: bold;
 }
-.rank-wins{
-  color:#999;
-  font-size:12px
+.rank-wins {
+  color: #999;
+  font-size: 12px;
 }
 </style>
 </head>
 <body>
 <main class="container">
 <section id="startScreen" class="card screen active">
-  <div class="small-title">DMD SUKIGAO 9</div>
+  <div class="small-title">
+    DMD SUKIGAO 9
+  </div>
   <h1>
     DMD<br>
     好き顔9選メーカー
@@ -223,14 +238,27 @@ h1{
     直感で選んでね。<br>
     同じ人が何度も登場することもあるよ♡
   </div>
-  <button class="start-button" onclick="startGame()">
-    はじめる 💗
+
+<button
+class=“start-button”
+onclick=“startGame()”
+
+はじめる 💗
   </button>
 </section>
 <section id="gameScreen" class="card screen">
-  <div id="progress" class="progress"></div>
-  <div id="question" class="question"></div>
-  <div id="members" class="members"></div>
+  <div
+    id="progress"
+    class="progress"
+  ></div>
+  <div
+    id="question"
+    class="question"
+  ></div>
+  <div
+    id="members"
+    class="members"
+  ></div>
 
 <button
 id=“nextButton”
@@ -242,17 +270,36 @@ style=“display:none;”
   </button>
 </section>
 <section id="resultScreen" class="card screen">
-  <div class="small-title">DMD SUKIGAO 9</div>
-  <h1>好き顔9 💗</h1>
-  <div class="subtitle">あなたのTOP9！</div>
-  <div id="resultGrid" class="final-grid"></div>
-  <div id="rankList" class="rank-list"></div>
-  <button class="retry-button" onclick="startGame()">
-    もう一回やる
+  <div class="small-title">
+    DMD SUKIGAO 9
+  </div>
+  <h1>
+    好き顔9 💗
+  </h1>
+  <div class="subtitle">
+    あなたのTOP9！
+  </div>
+  <div
+    id="resultGrid"
+    class="final-grid"
+  ></div>
+  <div
+    id="rankList"
+    class="rank-list"
+  ></div>
+
+<button
+class=“retry-button”
+onclick=“startGame()”
+
+もう一回やる
   </button>
 </section>
 </main>
 <script>
+/* =====================================
+   MEMBERS
+===================================== */
 const members = [
   {name:"Max",gen:"Gen 1"},
   {name:"Zee",gen:"Gen 1"},
@@ -302,104 +349,68 @@ const members = [
   {name:"Thee",gen:"Gen 6"},
   {name:"JT",gen:"Gen 6"}
 ];
-/* 実際のGitHubファイル名 */
+/* =====================================
+   PHOTO FILES
+===================================== */
 const photoFiles = {
-  "Yim":"いむ.jpg",
-  "Auau":"うう.jpg",
-  "Wave":"うぇーぶ.jpg",
-  "Otto":"おっとー.jpg",
-  "Ohm":"おむ.jpg",
-  "Kim":"きむ.jpg",
-  "Keng":"けん.jpg",
-  "Copper":"こぱ.jpg",
-  "Kong":"こん.jpg",
-  "JJ":"じぇじぇ.jpg",
-  "Gems":"じぇむず.jpg",
-  "JT":"じぇーてぃー.jpg",
-  "James":"じぇーむす.jpg",
-  "Jimmy":"じみー.jpg",
-  "Zee":"しー.jpg",
-  "Save":"せぶ.jpg",
-  "Tutor":"ちゅた.jpg",
-  "TeeTee":"てぃてぃ.jpg",
-  "Teddy":"てでぃー.jpg",
-  "Tommy":"とみー.jpg",
-  "Tle":"とる.jpg",
-  "Ton":"とん.jpg",
-  "Thomas":"とーます.jpg",
-  "Nat":"なっと.jpg",
-  "Nan":"なん.jpg",
-  "Namping":"なんぴん.jpg",
-  "Nick":"にっく.jpg",
-  "NuNew":"ぬぬ.jpg",
-  "Net":"ねっと.jpg",
-  "North":"のーす.jpg",
-  "Patji":"ぱっち.jpg",
-  "Pung":"ぱん.jpg",
-  "Park":"ぱーく.jpg",
-  "Pete":"ぴーと.jpg",
-  "FirstOne":"ふぁすわん.jpg",
-  "Fifa":"ふぃふぁ.jpg",
-  "Phupha":"ぷーぱー.jpg",
-  "Poppy":"ぽぴー.jpg",
-  "Por":"ぽー.jpg",
-  "Porsche":"ぽーしぇ.jpg",
-  "Max":"まっくす.jpg",
-  "Mark":"まーく.jpg",
-  "Latte":"らて.jpg",
-  "Few":"Few.jpg",
-  "Reeonn":"Reeonn .jpg",
-  "Thee":"Thee.jpg",
-  "Ryujin":"IMG_8694.jpeg"
+  "Yim": "いむ.jpg",
+  "Auau": "うう.jpg",
+  "Wave": "うぇーぶ.jpg",
+  "Otto": "おっとー.jpg",
+  "Ohm": "おむ.jpg",
+  "Kim": "きむ.jpg",
+  "Keng": "けん.jpg",
+  "Few": "Few.jpg",
+  "Reeonn": "Reeonn .jpg",
+  "Thee": "Thee.jpg",
+  "Copper": "こぱ.jpg",
+  "Kong": "こん.jpg",
+  "JJ": "じぇじぇ.jpg",
+  "Gems": "じぇむず.jpg",
+  "JT": "じぇーでぃー.jpg",
+  "James": "じぇーむす.jpg",
+  "Jimmy": "じみー.jpg",
+  "Zee": "しー.jpg",
+  "Save": "せぶ.jpg",
+  "Tutor": "ちゅた.jpg",
+  "TeeTee": "てぃてぃ.jpg",
+  "Teddy": "てでぃー.jpg",
+  "Tommy": "とみー.jpg",
+  "Tle": "とる.jpg",
+  "Ton": "とん.jpg",
+  "Thomas": "とーます.jpg",
+  "Nat": "なっと.jpg",
+  "Nan": "なん.jpg",
+  "Namping": "なんぴん.jpg",
+  "Nick": "にっく.jpg",
+  "NuNew": "ぬぬ.jpg",
+  "Net": "ねっと.jpg",
+  "North": "のーす.jpg",
+  "Patji": "ぱっち.jpg",
+  "Pung": "ぱん.jpg",
+  "Park": "ぱーく.jpg",
+  "Pete": "ぴーと.jpg",
+  "FirstOne": "ふぁすわん.jpg",
+  "Fifa": "ふぃふぁ.jpg",
+  "Phupha": "ぷーぱー.jpg",
+  "Poppy": "ぽぴー.jpg",
+  "Por": "ぽー.jpg",
+  "Porsche": "ぽーしぇ.jpg",
+  "Max": "まっくす.jpg",
+  "Mark": "まーく.jpg",
+  "Latte": "らて.jpg",
+  "Ryujin": "IMG_8694.jpeg"
 };
-/* ファイル名のUnicode違い対策 */
-function getPhotoCandidates(filename){
-  return [
-    filename,
-    filename.normalize("NFC"),
-    filename.normalize("NFD")
-  ].filter(
-    (value,index,array) =>
-      array.indexOf(value) === index
-  );
-}
-/* 写真を確実に表示する */
-function createImage(member, className){
-  const wrapper =
-    document.createElement("div");
-  wrapper.className = className;
-  const filename =
-    photoFiles[member.name];
-  if(!filename){
-    wrapper.textContent =
-      member.name.charAt(0);
-    return wrapper;
-  }
-  const img =
-    document.createElement("img");
-  img.alt = member.name;
-  const candidates =
-    getPhotoCandidates(filename);
-  let index = 0;
-  function tryNext(){
-    if(index >= candidates.length){
-      img.style.display = "none";
-      wrapper.textContent =
-        member.name.charAt(0);
-      return;
-    }
-    img.src = candidates[index];
-    index++;
-  }
-  img.onerror = tryNext;
-  wrapper.appendChild(img);
-  tryNext();
-  return wrapper;
-}
+/* =====================================
+   SETTINGS
+===================================== */
 const ROUND1_GAMES = 30;
 const ROUND2_GAMES = 20;
 const ROUND3_GAMES = 15;
 const ROUND4_GAMES = 54;
+/* =====================================
+   VARIABLES
+===================================== */
 let round = 1;
 let gameNumber = 0;
 let currentCandidates = [];
@@ -413,77 +424,101 @@ let round2Pool = [];
 let round3Pool = [];
 let final18 = [];
 let finalMatchups = [];
-function shuffle(array){
+/* =====================================
+   SHUFFLE
+===================================== */
+function shuffle(array) {
   const result = [...array];
-  for(let i=result.length-1;i>0;i--){
+  for (
+    let i = result.length - 1;
+    i > 0;
+    i--
+  ) {
     const j =
       Math.floor(
-        Math.random()*(i+1)
+        Math.random() * (i + 1)
       );
-    [result[i],result[j]] =
-    [result[j],result[i]];
+    [
+      result[i],
+      result[j]
+    ] = [
+      result[j],
+      result[i]
+    ];
   }
   return result;
 }
-function startGame(){
-  round=1;
-  gameNumber=0;
-  selected=[];
-  round2Pool=[];
-  round3Pool=[];
-  final18=[];
-  finalMatchups=[];
-  votes={};
-  round1Selected={};
-  round2Selected={};
-  round3Selected={};
-  round4Wins={};
-  members.forEach(member=>{
-    votes[member.name]=0;
-    round1Selected[member.name]=0;
-    round2Selected[member.name]=0;
-    round3Selected[member.name]=0;
-    round4Wins[member.name]=0;
+/* =====================================
+   START
+===================================== */
+function startGame() {
+  round = 1;
+  gameNumber = 0;
+  selected = [];
+  round2Pool = [];
+  round3Pool = [];
+  final18 = [];
+  finalMatchups = [];
+  votes = {};
+  round1Selected = {};
+  round2Selected = {};
+  round3Selected = {};
+  round4Wins = {};
+  members.forEach(member => {
+    votes[member.name] = 0;
+    round1Selected[member.name] = 0;
+    round2Selected[member.name] = 0;
+    round3Selected[member.name] = 0;
+    round4Wins[member.name] = 0;
   });
   document
     .getElementById("startScreen")
-    .classList.remove("active");
+    .classList
+    .remove("active");
   document
     .getElementById("resultScreen")
-    .classList.remove("active");
+    .classList
+    .remove("active");
   document
     .getElementById("gameScreen")
-    .classList.add("active");
+    .classList
+    .add("active");
   showNextGame();
 }
-function weightedRandomMember(pool,scoreObject){
-  let total=0;
-  pool.forEach(member=>{
+/* =====================================
+   WEIGHTED RANDOM
+===================================== */
+function weightedRandomMember(pool, scoreObject) {
+  let total = 0;
+  pool.forEach(member => {
     total +=
-      (scoreObject[member.name]||0)+1;
+      (scoreObject[member.name] || 0) + 1;
   });
   let random =
-    Math.random()*total;
-  for(const member of pool){
+    Math.random() * total;
+  for(const member of pool) {
     random -=
-      (scoreObject[member.name]||0)+1;
-    if(random<=0){
+      (scoreObject[member.name] || 0) + 1;
+    if(random <= 0) {
       return member;
     }
   }
   return pool[
     Math.floor(
-      Math.random()*pool.length
+      Math.random() * pool.length
     )
   ];
 }
-function getFourPeople(pool,scoreObject){
-  let result=[];
-  let safety=0;
+/* =====================================
+   GET FOUR
+===================================== */
+function getFourPeople(pool, scoreObject) {
+  let result = [];
+  let safety = 0;
   while(
-    result.length<4 &&
-    safety<1000
-  ){
+    result.length < 4 &&
+    safety < 1000
+  ) {
     safety++;
     const person =
       weightedRandomMember(
@@ -493,40 +528,47 @@ function getFourPeople(pool,scoreObject){
     if(
       person &&
       !result.some(
-        x=>x.name===person.name
+        x =>
+          x.name === person.name
       )
-    ){
+    ) {
       result.push(person);
     }
   }
   return result;
 }
-function getRound1Group(){
+/* =====================================
+   ROUND 1
+===================================== */
+function getRound1Group() {
   return getFourPeople(
     members,
     round1Selected
   );
 }
-function createRound2Pool(){
-  let pool=[];
-  members.forEach(member=>{
+/* =====================================
+   ROUND 2
+===================================== */
+function createRound2Pool() {
+  let pool = [];
+  members.forEach(member => {
     pool.push(member);
   });
-  members.forEach(member=>{
+  members.forEach(member => {
     const count =
       round1Selected[member.name];
     for(
-      let i=0;
-      i<Math.min(count,4);
+      let i = 0;
+      i < Math.min(count,4);
       i++
-    ){
+    ) {
       pool.push(member);
     }
   });
   return pool;
 }
-function getRound2Group(){
-  if(round2Pool.length===0){
+function getRound2Group() {
+  if(round2Pool.length === 0) {
     round2Pool =
       createRound2Pool();
   }
@@ -535,31 +577,34 @@ function getRound2Group(){
     round1Selected
   );
 }
-function createRound3Pool(){
+/* =====================================
+   ROUND 3
+===================================== */
+function createRound3Pool() {
   return [...members]
-    .sort((a,b)=>{
+    .sort((a,b) => {
       const scoreA =
-        round1Selected[a.name]+
+        round1Selected[a.name] +
         round2Selected[a.name];
       const scoreB =
-        round1Selected[b.name]+
+        round1Selected[b.name] +
         round2Selected[b.name];
-      if(scoreA===scoreB){
-        return Math.random()-.5;
+      if(scoreA === scoreB) {
+        return Math.random() - 0.5;
       }
-      return scoreB-scoreA;
+      return scoreB - scoreA;
     })
     .slice(0,24);
 }
-function getRound3Group(){
-  if(round3Pool.length===0){
+function getRound3Group() {
+  if(round3Pool.length === 0) {
     round3Pool =
       createRound3Pool();
   }
-  let score={};
-  round3Pool.forEach(member=>{
+  let score = {};
+  round3Pool.forEach(member => {
     score[member.name] =
-      round1Selected[member.name]+
+      round1Selected[member.name] +
       round2Selected[member.name];
   });
   return getFourPeople(
@@ -567,165 +612,186 @@ function getRound3Group(){
     score
   );
 }
-function createFinal18(){
+/* =====================================
+   FINAL 18
+===================================== */
+function createFinal18() {
   return [...members]
-    .sort((a,b)=>{
+    .sort((a,b) => {
       const scoreA =
-        round1Selected[a.name]+
-        round2Selected[a.name]+
+        round1Selected[a.name] +
+        round2Selected[a.name] +
         round3Selected[a.name];
       const scoreB =
-        round1Selected[b.name]+
-        round2Selected[b.name]+
+        round1Selected[b.name] +
+        round2Selected[b.name] +
         round3Selected[b.name];
-      if(scoreA===scoreB){
-        return Math.random()-.5;
+      if(scoreA === scoreB) {
+        return Math.random() - 0.5;
       }
-      return scoreB-scoreA;
+      return scoreB - scoreA;
     })
     .slice(0,18);
 }
-function createRound4Matches(){
-  let slots=[];
-  final18.forEach(member=>{
-    for(let i=0;i<6;i++){
+/* =====================================
+   ROUND 4
+===================================== */
+function createRound4Matches() {
+  let slots = [];
+  final18.forEach(member => {
+    for(let i = 0; i < 6; i++) {
       slots.push(member);
     }
   });
   for(
-    let attempt=0;
-    attempt<1000;
+    let attempt = 0;
+    attempt < 1000;
     attempt++
-  ){
-    slots=shuffle(slots);
-    let valid=true;
+  ) {
+    slots =
+      shuffle(slots);
+    let valid = true;
     for(
-      let i=0;
-      i<slots.length;
-      i+=2
-    ){
+      let i = 0;
+      i < slots.length;
+      i += 2
+    ) {
       if(
-        slots[i].name===
-        slots[i+1].name
-      ){
-        valid=false;
+        slots[i].name ===
+        slots[i + 1].name
+      ) {
+        valid = false;
         break;
       }
     }
-    if(valid)break;
+    if(valid) break;
   }
-  let matches=[];
+  let matches = [];
   for(
-    let i=0;
-    i<slots.length;
-    i+=2
-  ){
+    let i = 0;
+    i < slots.length;
+    i += 2
+  ) {
     matches.push([
       slots[i],
-      slots[i+1]
+      slots[i + 1]
     ]);
   }
   return matches;
 }
-function showNextGame(){
-  selected=[];
-  if(round===1){
+/* =====================================
+   SHOW GAME
+===================================== */
+function showNextGame() {
+  selected = [];
+  if(round === 1) {
     currentCandidates =
       getRound1Group();
   }
-  else if(round===2){
+  else if(round === 2) {
     currentCandidates =
       getRound2Group();
   }
-  else if(round===3){
+  else if(round === 3) {
     currentCandidates =
       getRound3Group();
   }
-  else{
+  else {
     currentCandidates =
       finalMatchups[gameNumber];
   }
-  const membersElement =
-    document.getElementById("members");
-  membersElement.innerHTML="";
+  document
+    .getElementById("members")
+    .innerHTML = "";
   document
     .getElementById("nextButton")
-    .style.display="none";
-  if(round===4){
+    .style.display = "none";
+  if(round === 4) {
     document
       .getElementById("progress")
       .textContent =
-      `FINAL　${gameNumber+1} / ${ROUND4_GAMES}`;
+      `FINAL　${gameNumber + 1} / ${ROUND4_GAMES}`;
     document
       .getElementById("question")
       .textContent =
       "この2人なら、顔が好きなのはどっち？♡";
   }
-  else{
+  else {
     const total =
-      round===1
+      round === 1
         ? ROUND1_GAMES
-        : round===2
+        : round === 2
           ? ROUND2_GAMES
           : ROUND3_GAMES;
     document
       .getElementById("progress")
       .textContent =
-      `ROUND ${round}　${gameNumber+1} / ${total}`;
+      `ROUND ${round}　${gameNumber + 1} / ${total}`;
     document
       .getElementById("question")
       .textContent =
       "この4人から好きな2人を選んでね♡";
   }
   currentCandidates.forEach(
-    (member,index)=>{
+    (member,index) => {
       const element =
         document.createElement("div");
-      element.className="member";
-      element.onclick=function(){
-        toggleMember(
-          element,
-          index
-        );
-      };
+      element.className =
+        "member";
+      element.onclick =
+        function() {
+          toggleMember(
+            element,
+            index
+          );
+        };
       const photo =
-        createImage(
-          member,
-          "photo"
-        );
-      element.appendChild(photo);
-      const nameElement =
-        document.createElement("div");
-      nameElement.className=
-        "member-name";
-      nameElement.textContent=
-        member.name;
-      element.appendChild(nameElement);
-      const genElement =
-        document.createElement("div");
-      genElement.className=
-        "member-gen";
-      genElement.textContent=
-        member.gen;
-      element.appendChild(genElement);
-      membersElement.appendChild(element);
+        photoFiles[member.name];
+      element.innerHTML = `
+        <div class="photo">
+          ${
+            photo
+              ? `<img src="${photo}" alt="${member.name}">`
+              : member.name.charAt(0)
+          }
+        </div>
+        <div class="member-name">
+          ${member.name}
+        </div>
+        <div class="member-gen">
+          ${member.gen}
+        </div>
+      `;
+      document
+        .getElementById("members")
+        .appendChild(element);
     }
   );
 }
-function toggleMember(element,index){
+/* =====================================
+   SELECT
+===================================== */
+function toggleMember(
+  element,
+  index
+) {
   const limit =
-    round===4 ? 1 : 2;
-  if(selected.includes(index)){
+    round === 4
+      ? 1
+      : 2;
+  if(selected.includes(index)) {
     selected =
       selected.filter(
-        i=>i!==index
+        i => i !== index
       );
     element
       .classList
       .remove("selected");
   }
-  else{
-    if(selected.length>=limit){
+  else {
+    if(
+      selected.length >= limit
+    ) {
       return;
     }
     selected.push(index);
@@ -736,111 +802,145 @@ function toggleMember(element,index){
   document
     .getElementById("nextButton")
     .style.display =
-      selected.length===limit
+      selected.length === limit
         ? "block"
         : "none";
 }
-function confirmSelection(){
-  if(round===1){
-    selected.forEach(index=>{
+/* =====================================
+   CONFIRM
+===================================== */
+function confirmSelection() {
+  if(round === 1) {
+    selected.forEach(index => {
       const member =
         currentCandidates[index];
-      round1Selected[member.name]++;
-      votes[member.name]++;
+      round1Selected[
+        member.name
+      ]++;
+      votes[
+        member.name
+      ]++;
     });
     gameNumber++;
-    if(gameNumber>=ROUND1_GAMES){
+    if(
+      gameNumber >=
+      ROUND1_GAMES
+    ) {
       round2Pool =
         createRound2Pool();
-      round=2;
-      gameNumber=0;
+      round = 2;
+      gameNumber = 0;
     }
     showNextGame();
     return;
   }
-  if(round===2){
-    selected.forEach(index=>{
+  if(round === 2) {
+    selected.forEach(index => {
       const member =
         currentCandidates[index];
-      round2Selected[member.name]++;
-      votes[member.name]++;
+      round2Selected[
+        member.name
+      ]++;
+      votes[
+        member.name
+      ]++;
     });
     gameNumber++;
-    if(gameNumber>=ROUND2_GAMES){
+    if(
+      gameNumber >=
+      ROUND2_GAMES
+    ) {
       round3Pool =
         createRound3Pool();
-      round=3;
-      gameNumber=0;
+      round = 3;
+      gameNumber = 0;
     }
     showNextGame();
     return;
   }
-  if(round===3){
-    selected.forEach(index=>{
+  if(round === 3) {
+    selected.forEach(index => {
       const member =
         currentCandidates[index];
-      round3Selected[member.name]++;
-      votes[member.name]++;
+      round3Selected[
+        member.name
+      ]++;
+      votes[
+        member.name
+      ]++;
     });
     gameNumber++;
-    if(gameNumber>=ROUND3_GAMES){
+    if(
+      gameNumber >=
+      ROUND3_GAMES
+    ) {
       final18 =
         createFinal18();
       finalMatchups =
         createRound4Matches();
-      round=4;
-      gameNumber=0;
+      round = 4;
+      gameNumber = 0;
     }
     showNextGame();
     return;
   }
-  if(round===4){
+  if(round === 4) {
     const winner =
       currentCandidates[
         selected[0]
       ];
-    round4Wins[winner.name]++;
+    round4Wins[
+      winner.name
+    ]++;
     gameNumber++;
-    if(gameNumber>=ROUND4_GAMES){
+    if(
+      gameNumber >=
+      ROUND4_GAMES
+    ) {
       showFinalResult();
       return;
     }
     showNextGame();
   }
 }
-function showFinalResult(){
+/* =====================================
+   RESULT
+===================================== */
+function showFinalResult() {
   const ranking =
     [...final18]
-      .sort((a,b)=>{
+      .sort((a,b) => {
         const winsA =
           round4Wins[a.name];
         const winsB =
           round4Wins[b.name];
-        if(winsA===winsB){
+        if(winsA === winsB) {
           const totalA =
-            round1Selected[a.name]+
-            round2Selected[a.name]+
+            round1Selected[a.name] +
+            round2Selected[a.name] +
             round3Selected[a.name];
           const totalB =
-            round1Selected[b.name]+
-            round2Selected[b.name]+
+            round1Selected[b.name] +
+            round2Selected[b.name] +
             round3Selected[b.name];
-          if(totalA===totalB){
-            return Math.random()-.5;
+          if(totalA === totalB) {
+            return Math.random() - 0.5;
           }
-          return totalB-totalA;
+          return totalB - totalA;
         }
-        return winsB-winsA;
+        return winsB - winsA;
       });
   const top9 =
     ranking.slice(0,9);
   document
     .getElementById("gameScreen")
-    .classList.remove("active");
+    .classList
+    .remove("active");
   document
     .getElementById("resultScreen")
-    .classList.add("active");
-  const displayOrder=[
+    .classList
+    .add("active");
+  const displayOrder = [
     top9[3],
     top9[4],
     top9[5],
@@ -851,78 +951,67 @@ function showFinalResult(){
     top9[7],
     top9[8]
   ];
-  const numbers=[
+  const numbers = [
     4,5,6,
     2,1,3,
     7,8,9
   ];
   const grid =
-    document.getElementById("resultGrid");
-  grid.innerHTML="";
+    document.getElementById(
+      "resultGrid"
+    );
+  grid.innerHTML = "";
   displayOrder.forEach(
-    (member,index)=>{
+    (member,index) => {
       const card =
         document.createElement("div");
-      card.className="final-card";
+      card.className =
+        "final-card";
       const photo =
-        createImage(
-          member,
-          "final-photo"
-        );
-      card.appendChild(photo);
-      const number =
-        document.createElement("div");
-      number.className=
-        "final-number";
-      number.textContent=
-        numbers[index];
-      card.appendChild(number);
-      const name =
-        document.createElement("div");
-      name.className=
-        "final-name";
-      name.textContent=
-        member.name;
-      card.appendChild(name);
-      const gen =
-        document.createElement("div");
-      gen.className=
-        "final-gen";
-      gen.textContent=
-        member.gen;
-      card.appendChild(gen);
+        photoFiles[member.name];
+      card.innerHTML = `
+        <div class="final-photo">
+          ${
+            photo
+              ? `<img src="${photo}" alt="${member.name}">`
+              : member.name.charAt(0)
+          }
+        </div>
+        <div class="final-number">
+          ${numbers[index]}
+        </div>
+        <div class="final-name">
+          ${member.name}
+        </div>
+        <div class="final-gen">
+          ${member.gen}
+        </div>
+      `;
       grid.appendChild(card);
     }
   );
   const rankList =
-    document.getElementById("rankList");
-  rankList.innerHTML="";
+    document.getElementById(
+      "rankList"
+    );
+  rankList.innerHTML = "";
   ranking.forEach(
-    (member,index)=>{
+    (member,index) => {
       const row =
         document.createElement("div");
-      row.className="rank-row";
-      const number =
-        document.createElement("div");
-      number.className=
-        "rank-number";
-      number.textContent=
-        `${index+1}位`;
-      row.appendChild(number);
-      const name =
-        document.createElement("div");
-      name.className=
-        "rank-name";
-      name.textContent=
-        member.name;
-      row.appendChild(name);
-      const wins =
-        document.createElement("div");
-      wins.className=
-        "rank-wins";
-      wins.textContent=
-        `${round4Wins[member.name]}勝`;
-      row.appendChild(wins);
+      row.className =
+        "rank-row";
+      row.innerHTML = `
+        <div class="rank-number">
+          ${index + 1}位
+        </div>
+        <div class="rank-name">
+          ${member.name}
+        </div>
+        <div class="rank-wins">
+          ${round4Wins[member.name]}勝
+        </div>
+      `;
       rankList.appendChild(row);
     }
   );
