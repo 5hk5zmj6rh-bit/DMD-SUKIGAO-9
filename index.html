@@ -37,7 +37,7 @@ body {
   border-radius: 30px;
   padding: 30px 18px;
   text-align: center;
-  box-shadow: 0 8px 30px rgba(170,90,130,.08);
+  box-shadow: 0 8px 30px rgba(170, 90, 130, 0.08);
 }
 
 .screen {
@@ -58,6 +58,7 @@ body {
 h1 {
   margin: 12px 0 0;
   font-size: 34px;
+  line-height: 1.25;
 }
 
 .subtitle {
@@ -88,7 +89,7 @@ h1 {
 .start-button:active,
 .next-button:active,
 .retry-button:active {
-  transform: scale(.98);
+  transform: scale(0.98);
 }
 
 .progress {
@@ -114,22 +115,22 @@ h1 {
   background: white;
   border-radius: 20px;
   padding: 10px;
-  box-shadow: 0 5px 18px rgba(0,0,0,.08);
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
   cursor: pointer;
-  transition: .15s;
+  transition: 0.15s;
 }
 
 .member.selected {
   border-color: #e98ab5;
   background: #fff0f7;
-  transform: scale(.97);
+  transform: scale(0.97);
 }
 
 .photo {
   width: 100%;
   aspect-ratio: 1;
   border-radius: 15px;
-  background: linear-gradient(135deg,#f1e7ed,#e4d5de);
+  background: linear-gradient(135deg, #f1e7ed, #e4d5de);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -150,55 +151,56 @@ h1 {
   font-size: 12px;
 }
 
-.result-title {
-  font-size: 28px;
-  font-weight: bold;
-}
+/* =========================
+   FINAL 9 GRID
+========================= */
 
-.result-list {
-  margin-top: 20px;
+.final-grid {
+  margin-top: 25px;
   display: grid;
-  gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
 }
 
-.result-item {
+.final-card {
   background: white;
   border: 1px solid #ead8e3;
   border-radius: 17px;
-  padding: 14px;
-  display: flex;
-  align-items: center;
-  text-align: left;
+  padding: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
-.result-number {
-  width: 40px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #a36b88;
-}
-
-.result-photo {
-  width: 52px;
-  height: 52px;
+.final-photo {
+  width: 100%;
+  aspect-ratio: 1;
   border-radius: 13px;
-  background: #eee3e9;
+  background: linear-gradient(135deg, #f1e7ed, #e4d5de);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #a36b88;
-  font-weight: bold;
-  margin-right: 12px;
-}
-
-.result-name {
+  font-size: 25px;
   font-weight: bold;
 }
 
-.result-gen {
-  color: #999;
+.final-number {
+  color: #a36b88;
   font-size: 12px;
+  font-weight: bold;
+  margin-top: 6px;
+}
+
+.final-name {
+  font-weight: bold;
+  font-size: 14px;
   margin-top: 3px;
+  word-break: break-word;
+}
+
+.final-gen {
+  color: #999;
+  font-size: 10px;
+  margin-top: 2px;
 }
 
 .note {
@@ -207,14 +209,20 @@ h1 {
   margin-top: 20px;
   line-height: 1.7;
 }
+
 </style>
 </head>
+
 
 <body>
 
 <main class="container">
 
-<!-- START -->
+
+<!-- =========================
+     START SCREEN
+========================= -->
+
 <section id="startScreen" class="card screen active">
 
   <div class="small-title">
@@ -233,27 +241,39 @@ h1 {
   </div>
 
   <div class="note">
-    推しではなく、顔だけで直感勝負！<br>
-    4人の中から好きな人を選んでね。
+    推しランキングじゃなくて、<br>
+    顔だけで直感勝負！
   </div>
 
-  <button class="start-button" onclick="startGame()">
+  <button
+    class="start-button"
+    onclick="startGame()">
     はじめる 💗
   </button>
 
 </section>
 
 
-<!-- GAME -->
+<!-- =========================
+     GAME SCREEN
+========================= -->
+
 <section id="gameScreen" class="card screen">
 
-  <div id="progress" class="progress"></div>
-
-  <div id="question" class="question">
-    この4人から好きな2人を選んでね♡
+  <div
+    id="progress"
+    class="progress">
   </div>
 
-  <div id="members" class="members"></div>
+  <div
+    id="question"
+    class="question">
+  </div>
+
+  <div
+    id="members"
+    class="members">
+  </div>
 
   <button
     id="nextButton"
@@ -266,107 +286,316 @@ h1 {
 </section>
 
 
-<!-- RESULT -->
+<!-- =========================
+     RESULT SCREEN
+========================= -->
+
 <section id="resultScreen" class="card screen">
 
-  <div class="result-title">
-    DMD好き顔9 💗
+  <div class="small-title">
+    DMD SUKIGAO 9
   </div>
+
+  <h1>
+    好き顔9 💗
+  </h1>
 
   <div class="subtitle">
     あなたが選び抜いた9人！
   </div>
 
-  <div id="resultList" class="result-list"></div>
+  <div
+    id="resultGrid"
+    class="final-grid">
+  </div>
 
-  <button class="retry-button" onclick="startGame()">
+  <button
+    class="retry-button"
+    onclick="startGame()">
     もう一回やる
   </button>
 
 </section>
+
 
 </main>
 
 
 <script>
 
-/* =====================================
+
+/* ==========================================
    DMD MEMBERS
-   全47人
-===================================== */
+   GEN 1〜6 / 全47人
+========================================== */
 
 const members = [
 
   /* GEN 1 */
-  { name: "Max", gen: "Gen 1" },
-  { name: "Zee", gen: "Gen 1" },
-  { name: "Poppy", gen: "Gen 1" },
-  { name: "Park", gen: "Gen 1" },
-  { name: "Mark", gen: "Gen 1" },
-  { name: "Jimmy", gen: "Gen 1" },
-  { name: "Tommy", gen: "Gen 1" },
+
+  {
+    name: "Max",
+    gen: "Gen 1"
+  },
+
+  {
+    name: "Zee",
+    gen: "Gen 1"
+  },
+
+  {
+    name: "Poppy",
+    gen: "Gen 1"
+  },
+
+  {
+    name: "Park",
+    gen: "Gen 1"
+  },
+
+  {
+    name: "Mark",
+    gen: "Gen 1"
+  },
+
+  {
+    name: "Jimmy",
+    gen: "Gen 1"
+  },
+
+  {
+    name: "Tommy",
+    gen: "Gen 1"
+  },
+
 
   /* GEN 2 */
-  { name: "NuNew", gen: "Gen 2" },
-  { name: "Net", gen: "Gen 2" },
-  { name: "Nat", gen: "Gen 2" },
-  { name: "Yim", gen: "Gen 2" },
-  { name: "Tutor", gen: "Gen 2" },
-  { name: "James", gen: "Gen 2" },
+
+  {
+    name: "NuNew",
+    gen: "Gen 2"
+  },
+
+  {
+    name: "Net",
+    gen: "Gen 2"
+  },
+
+  {
+    name: "Nat",
+    gen: "Gen 2"
+  },
+
+  {
+    name: "Yim",
+    gen: "Gen 2"
+  },
+
+  {
+    name: "Tutor",
+    gen: "Gen 2"
+  },
+
+  {
+    name: "James",
+    gen: "Gen 2"
+  },
+
 
   /* GEN 3 */
-  { name: "Tle", gen: "Gen 3" },
-  { name: "Keng", gen: "Gen 3" },
-  { name: "FirstOne", gen: "Gen 3" },
-  { name: "Latte", gen: "Gen 3" },
-  { name: "Thomas", gen: "Gen 3" },
-  { name: "Namping", gen: "Gen 3" },
-  { name: "Kong", gen: "Gen 3" },
-  { name: "Gems", gen: "Gen 3" },
-  { name: "TeeTee", gen: "Gen 3" },
+
+  {
+    name: "Tle",
+    gen: "Gen 3"
+  },
+
+  {
+    name: "Keng",
+    gen: "Gen 3"
+  },
+
+  {
+    name: "FirstOne",
+    gen: "Gen 3"
+  },
+
+  {
+    name: "Latte",
+    gen: "Gen 3"
+  },
+
+  {
+    name: "Thomas",
+    gen: "Gen 3"
+  },
+
+  {
+    name: "Namping",
+    gen: "Gen 3"
+  },
+
+  {
+    name: "Kong",
+    gen: "Gen 3"
+  },
+
+  {
+    name: "Gems",
+    gen: "Gen 3"
+  },
+
+  {
+    name: "TeeTee",
+    gen: "Gen 3"
+  },
+
 
   /* GEN 4 */
-  { name: "Kim", gen: "Gen 4" },
-  { name: "JJ", gen: "Gen 4" },
-  { name: "Ohm", gen: "Gen 4" },
-  { name: "Auau", gen: "Gen 4" },
-  { name: "Ryujin", gen: "Gen 4" },
-  { name: "Patji", gen: "Gen 4" },
-  { name: "Por", gen: "Gen 4" },
-  { name: "Save", gen: "Gen 4" },
+
+  {
+    name: "Kim",
+    gen: "Gen 4"
+  },
+
+  {
+    name: "JJ",
+    gen: "Gen 4"
+  },
+
+  {
+    name: "Ohm",
+    gen: "Gen 4"
+  },
+
+  {
+    name: "Auau",
+    gen: "Gen 4"
+  },
+
+  {
+    name: "Ryujin",
+    gen: "Gen 4"
+  },
+
+  {
+    name: "Patji",
+    gen: "Gen 4"
+  },
+
+  {
+    name: "Por",
+    gen: "Gen 4"
+  },
+
+  {
+    name: "Save",
+    gen: "Gen 4"
+  },
+
 
   /* GEN 5 */
-  { name: "Porsche", gen: "Gen 5" },
-  { name: "Copper", gen: "Gen 5" },
-  { name: "Otto", gen: "Gen 5" },
-  { name: "Pung", gen: "Gen 5" },
-  { name: "North", gen: "Gen 5" },
-  { name: "Phupha", gen: "Gen 5" },
-  { name: "Wave", gen: "Gen 5" },
-  { name: "Fifa", gen: "Gen 5" },
-  { name: "Pete", gen: "Gen 5" },
+
+  {
+    name: "Porsche",
+    gen: "Gen 5"
+  },
+
+  {
+    name: "Copper",
+    gen: "Gen 5"
+  },
+
+  {
+    name: "Otto",
+    gen: "Gen 5"
+  },
+
+  {
+    name: "Pung",
+    gen: "Gen 5"
+  },
+
+  {
+    name: "North",
+    gen: "Gen 5"
+  },
+
+  {
+    name: "Phupha",
+    gen: "Gen 5"
+  },
+
+  {
+    name: "Wave",
+    gen: "Gen 5"
+  },
+
+  {
+    name: "Fifa",
+    gen: "Gen 5"
+  },
+
+  {
+    name: "Pete",
+    gen: "Gen 5"
+  },
+
 
   /* GEN 6 */
-  { name: "Teddy", gen: "Gen 6" },
-  { name: "Nick", gen: "Gen 6" },
-  { name: "Nan", gen: "Gen 6" },
-  { name: "Ton", gen: "Gen 6" },
-  { name: "Reeon", gen: "Gen 6" },
-  { name: "Few", gen: "Gen 6" },
-  { name: "Thee", gen: "Gen 6" },
-  { name: "JT", gen: "Gen 6" }
+
+  {
+    name: "Teddy",
+    gen: "Gen 6"
+  },
+
+  {
+    name: "Nick",
+    gen: "Gen 6"
+  },
+
+  {
+    name: "Nan",
+    gen: "Gen 6"
+  },
+
+  {
+    name: "Ton",
+    gen: "Gen 6"
+  },
+
+  {
+    name: "Reeon",
+    gen: "Gen 6"
+  },
+
+  {
+    name: "Few",
+    gen: "Gen 6"
+  },
+
+  {
+    name: "Thee",
+    gen: "Gen 6"
+  },
+
+  {
+    name: "JT",
+    gen: "Gen 6"
+  }
 
 ];
 
 
-/* =====================================
-   GAME DATA
-===================================== */
+/* ==========================================
+   GAME VARIABLES
+========================================== */
 
 let currentPool = [];
+
 let nextPool = [];
 
 let groups = [];
+
 let groupIndex = 0;
 
 let selected = [];
@@ -374,9 +603,9 @@ let selected = [];
 let round = 1;
 
 
-/* =====================================
+/* ==========================================
    SHUFFLE
-===================================== */
+========================================== */
 
 function shuffle(array) {
 
@@ -389,7 +618,9 @@ function shuffle(array) {
   ) {
 
     const j =
-      Math.floor(Math.random() * (i + 1));
+      Math.floor(
+        Math.random() * (i + 1)
+      );
 
     [
       result[i],
@@ -405,9 +636,9 @@ function shuffle(array) {
 }
 
 
-/* =====================================
-   START
-===================================== */
+/* ==========================================
+   START GAME
+========================================== */
 
 function startGame() {
 
@@ -424,28 +655,38 @@ function startGame() {
 
   round = 1;
 
+
   document
     .getElementById("startScreen")
-    .classList.remove("active");
+    .classList
+    .remove("active");
+
 
   document
     .getElementById("resultScreen")
-    .classList.remove("active");
+    .classList
+    .remove("active");
+
 
   document
     .getElementById("gameScreen")
-    .classList.add("active");
+    .classList
+    .add("active");
 
-  createGroups();
+
+  createRound1();
 
 }
 
 
-/* =====================================
-   CREATE GROUPS
-===================================== */
+/* ==========================================
+   ROUND 1
+   47 → 24
 
-function createGroups() {
+   4人 → 2人
+========================================== */
+
+function createRound1() {
 
   groups = [];
 
@@ -454,87 +695,72 @@ function createGroups() {
 
 
   /*
-    ROUND 1
-    47人
-
-    4人 × 11組 = 44人
-    残り3人 = 1組
-
-    各組から2人
-    → 22 + 2 = 24人
+    44人を4人ずつ
+    11グループ
   */
 
-  if (round === 1) {
-
-    for (
-      let i = 0;
-      i < 44;
-      i += 4
-    ) {
-
-      groups.push(
-        shuffled.slice(i, i + 4)
-      );
-
-    }
+  for (
+    let i = 0;
+    i < 44;
+    i += 4
+  ) {
 
     groups.push(
-      shuffled.slice(44, 47)
+      shuffled.slice(
+        i,
+        i + 4
+      )
     );
 
   }
 
 
   /*
-    ROUND 2
-    24人
-
-    4人 × 6組
-
-    各組から2人
-    → 12人
+    最後の3人
   */
 
-  else if (round === 2) {
-
-    for (
-      let i = 0;
-      i < 24;
-      i += 4
-    ) {
-
-      groups.push(
-        shuffled.slice(i, i + 4)
-      );
-
-    }
-
-  }
+  groups.push(
+    shuffled.slice(
+      44,
+      47
+    )
+  );
 
 
-  /*
-    FINAL
-    12人
+  groupIndex = 0;
 
-    4人 × 3組
+  showGroup();
 
-    各組から3人
-    → 9人
-  */
+}
 
-  else if (round === 3) {
 
-    for (
-      let i = 0;
-      i < 12;
-      i += 4
-    ) {
+/* ==========================================
+   ROUND 2
+   24 → 12
 
-      groups.push(
-        shuffled.slice(i, i + 4)
-      );
+   4人 → 2人
+========================================== */
 
-    }
+function createRound2() {
+
+  groups = [];
+
+  const shuffled =
+    shuffle(currentPool);
+
+
+  for (
+    let i = 0;
+    i < 24;
+    i += 4
+  ) {
+
+    groups.push(
+      shuffled.slice(
+        i,
+        i + 4
+      )
+    );
 
   }
 
@@ -546,33 +772,98 @@ function createGroups() {
 }
 
 
-/* =====================================
+/* ==========================================
+   ROUND 3
+   12 → 9
+
+   2人 → 1人
+   を3回
+
+   残り6人はそのまま通過
+========================================== */
+
+function createRound3() {
+
+  groups = [];
+
+  const shuffled =
+    shuffle(currentPool);
+
+
+  /*
+    最初の6人
+    → 3つの2人対決
+  */
+
+  for (
+    let i = 0;
+    i < 6;
+    i += 2
+  ) {
+
+    groups.push(
+      shuffled.slice(
+        i,
+        i + 2
+      )
+    );
+
+  }
+
+
+  /*
+    残り6人は
+    そのまま最終9人へ
+  */
+
+  nextPool =
+    shuffled.slice(6);
+
+
+  groupIndex = 0;
+
+  showGroup();
+
+}
+
+
+/* ==========================================
    SHOW GROUP
-===================================== */
+========================================== */
 
 function showGroup() {
 
   selected = [];
 
+
   const group =
     groups[groupIndex];
 
 
-  document
-    .getElementById("members")
-    .innerHTML = "";
+  const membersArea =
+    document.getElementById(
+      "members"
+    );
+
+
+  membersArea.innerHTML = "";
+
 
   document
     .getElementById("nextButton")
     .style.display = "none";
 
 
+  /*
+    必要選択人数
+  */
+
   let required;
 
 
   if (round === 3) {
 
-    required = 3;
+    required = 1;
 
   } else {
 
@@ -580,6 +871,10 @@ function showGroup() {
 
   }
 
+
+  /*
+    表示
+  */
 
   document
     .getElementById("progress")
@@ -593,13 +888,22 @@ function showGroup() {
       `この${group.length}人から好きな${required}人を選んでね♡`;
 
 
+  /*
+    メンバーカード
+  */
+
   group.forEach(
     (member, index) => {
 
       const element =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
 
-      element.className = "member";
+
+      element.className =
+        "member";
+
 
       element.onclick =
         function() {
@@ -629,9 +933,9 @@ function showGroup() {
       `;
 
 
-      document
-        .getElementById("members")
-        .appendChild(element);
+      membersArea.appendChild(
+        element
+      );
 
     }
   );
@@ -639,9 +943,9 @@ function showGroup() {
 }
 
 
-/* =====================================
-   TOGGLE SELECT
-===================================== */
+/* ==========================================
+   MEMBER SELECT
+========================================== */
 
 function toggleMember(
   element,
@@ -650,9 +954,13 @@ function toggleMember(
 
   const required =
     round === 3
-      ? 3
+      ? 1
       : 2;
 
+
+  /*
+    すでに選択中
+  */
 
   if (
     selected.includes(index)
@@ -663,13 +971,24 @@ function toggleMember(
         i => i !== index
       );
 
+
     element
       .classList
       .remove("selected");
 
   }
 
+
+  /*
+    新しく選択
+  */
+
   else {
+
+    /*
+      選べる人数を超えたら
+      選択できない
+    */
 
     if (
       selected.length >= required
@@ -679,7 +998,9 @@ function toggleMember(
 
     }
 
+
     selected.push(index);
+
 
     element
       .classList
@@ -687,6 +1008,10 @@ function toggleMember(
 
   }
 
+
+  /*
+    決定ボタン表示
+  */
 
   document
     .getElementById("nextButton")
@@ -698,15 +1023,20 @@ function toggleMember(
 }
 
 
-/* =====================================
+/* ==========================================
    CONFIRM
-===================================== */
+========================================== */
 
 function confirmSelection() {
 
   const group =
     groups[groupIndex];
 
+
+  /*
+    選んだメンバーを
+    次のプールへ
+  */
 
   selected.forEach(
     index => {
@@ -722,6 +1052,10 @@ function confirmSelection() {
   groupIndex++;
 
 
+  /*
+    まだグループが残っている
+  */
+
   if (
     groupIndex < groups.length
   ) {
@@ -733,54 +1067,74 @@ function confirmSelection() {
   }
 
 
-  /*
-    ラウンド終了
-  */
+  /* ========================================
+     ROUND 1 END
+     47 → 24
+  ======================================== */
 
-  currentPool =
-    nextPool;
+  if (
+    round === 1
+  ) {
 
-  nextPool = [];
+    currentPool =
+      nextPool;
 
-
-  /*
-    ROUND1
-    47 → 24
-  */
-
-  if (round === 1) {
+    nextPool = [];
 
     round = 2;
 
-    createGroups();
+    createRound2();
 
     return;
 
   }
 
 
-  /*
-    ROUND2
-    24 → 12
-  */
+  /* ========================================
+     ROUND 2 END
+     24 → 12
+  ======================================== */
 
-  if (round === 2) {
+  if (
+    round === 2
+  ) {
+
+    currentPool =
+      nextPool;
+
+    nextPool = [];
 
     round = 3;
 
-    createGroups();
+    createRound3();
 
     return;
 
   }
 
 
-  /*
-    FINAL
-    12 → 9
-  */
+  /* ========================================
+     ROUND 3 END
+     12 → 9
+  ======================================== */
 
-  if (round === 3) {
+  if (
+    round === 3
+  ) {
+
+    /*
+      nextPoolには
+
+      ・対決勝者 3人
+      ・自動通過 6人
+
+      合計9人
+    */
+
+    currentPool =
+      nextPool;
+
+    nextPool = [];
 
     showResult();
 
@@ -791,67 +1145,114 @@ function confirmSelection() {
 }
 
 
-/* =====================================
-   RESULT
-===================================== */
+/* ==========================================
+   FINAL RESULT
+========================================== */
 
 function showResult() {
 
   document
     .getElementById("gameScreen")
-    .classList.remove("active");
+    .classList
+    .remove("active");
+
 
   document
     .getElementById("resultScreen")
-    .classList.add("active");
+    .classList
+    .add("active");
 
 
-  const resultList =
+  const grid =
     document.getElementById(
-      "resultList"
+      "resultGrid"
     );
 
 
-  resultList.innerHTML = "";
+  grid.innerHTML = "";
 
 
-  currentPool.forEach(
+  /*
+    最終9人の番号配置
+
+      4 5 6
+      2 1 3
+      7 8 9
+
+    配列の順番は
+
+      1 = 真ん中
+      2 = 左
+      3 = 右
+      4 = 左上
+      5 = 上
+      6 = 右上
+      7 = 左下
+      8 = 下
+      9 = 右下
+  */
+
+  const positions = [
+
+    currentPool[3],  /* 4 */
+    currentPool[4],  /* 5 */
+    currentPool[5],  /* 6 */
+
+    currentPool[1],  /* 2 */
+    currentPool[0],  /* 1 */
+    currentPool[2],  /* 3 */
+
+    currentPool[6],  /* 7 */
+    currentPool[7],  /* 8 */
+    currentPool[8]   /* 9 */
+
+  ];
+
+
+  const numbers = [
+    4, 5, 6,
+    2, 1, 3,
+    7, 8, 9
+  ];
+
+
+  positions.forEach(
     (member, index) => {
 
-      const item =
-        document.createElement("div");
+      const card =
+        document.createElement(
+          "div"
+        );
 
-      item.className =
-        "result-item";
+
+      card.className =
+        "final-card";
 
 
-      item.innerHTML = `
+      card.innerHTML = `
 
-        <div class="result-number">
-          ${index + 1}
-        </div>
-
-        <div class="result-photo">
+        <div class="final-photo">
           ${member.name.charAt(0)}
         </div>
 
-        <div>
+        <div class="final-number">
+          ${numbers[index]}
+        </div>
 
-          <div class="result-name">
-            ${member.name}
-          </div>
+        <div class="final-name">
+          ${member.name}
+        </div>
 
-          <div class="result-gen">
-            ${member.gen}
-          </div>
-
+        <div class="final-gen">
+          ${member.gen}
         </div>
 
       `;
 
 
-      resultList
-        .appendChild(item);
+      grid.appendChild(
+        card
+      );
 
     }
   );
