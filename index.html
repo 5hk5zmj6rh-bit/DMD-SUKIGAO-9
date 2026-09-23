@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>DMD SUKIGAO 9</title>
 
 <style>
@@ -158,8 +157,6 @@ h1 {
   line-height: 1.7;
 }
 
-/* 最終9人 */
-
 .final-grid {
   margin-top: 25px;
   display: grid;
@@ -207,15 +204,12 @@ h1 {
   font-size: 10px;
   margin-top: 2px;
 }
-
 </style>
 </head>
 
 <body>
 
 <main class="container">
-
-<!-- START -->
 
 <section id="startScreen" class="card screen active">
 
@@ -239,16 +233,12 @@ h1 {
     同じメンバーが何度も登場するよ！
   </div>
 
-  <button
-    class="start-button"
-    onclick="startGame()">
+  <button class="start-button" onclick="startGame()">
     はじめる 💗
   </button>
 
 </section>
 
-
-<!-- GAME -->
 
 <section id="gameScreen" class="card screen">
 
@@ -268,8 +258,6 @@ h1 {
 
 </section>
 
-
-<!-- RESULT -->
 
 <section id="resultScreen" class="card screen">
 
@@ -363,7 +351,7 @@ const members = [
 
 
 /* =====================================
-   GAME SETTINGS
+   SETTINGS
 ===================================== */
 
 const ROUND1_GAMES = 30;
@@ -376,6 +364,8 @@ let currentCandidates = [];
 let selected = [];
 
 let votes = {};
+
+let previousGroupNames = [];
 
 
 /* =====================================
@@ -411,13 +401,16 @@ function startGame() {
 
   selected = [];
 
+  currentCandidates = [];
+
+  previousGroupNames = [];
+
   votes = {};
 
   members.forEach(member => {
-
     votes[member.name] = 0;
-
   });
+
 
   document
     .getElementById("startScreen")
@@ -431,44 +424,188 @@ function startGame() {
     .getElementById("gameScreen")
     .classList.add("active");
 
+
   showNextGame();
 
 }
 
 
 /* =====================================
-   RANDOM 4 PEOPLE
+   RANDOM 4
 ===================================== */
 
-function getRandomFour(array) {
+function getRandomFour(pool) {
 
-  return shuffle(array).slice(0,4);
+  let candidates = [...pool];
+
+  let chosen = [];
+
+
+  /*
+    同じ4人が連続で出るのを避ける
+  */
+
+  for(let attempt = 0; attempt < 30; attempt++) {
+
+    chosen = shuffle(candidates).slice(0,4);
+
+    const names =
+      chosen
+        .map(person => person.name)
+        .sort()
+        .join("|");
+
+
+    if(names !== previousGroupNames.join("|")) {
+
+      previousGroupNames =
+        names.split("|");
+
+      return chosen;
+
+    }
+
+  }
+
+
+  chosen =
+    shuffle(candidates).slice(0,4);
+
+
+  previousGroupNames =
+    chosen
+      .map(person => person.name)
+      .sort();
+
+
+  return chosen;
 
 }
 
 
 /* =====================================
-   SHOW GAME
+   WEIGHTED RANDOM 4
+===================================== */
+
+function getWeightedFour(pool) {
+
+  let available = [...pool];
+
+  let result = [];
+
+
+  while(
+    result.length < 4 &&
+    available.length > 0
+  ) {
+
+    let totalWeight = 0;
+
+
+    available.forEach(member => {
+
+      /*
+        ROUND 1で1票なら重み2
+        5票なら重み6
+
+        票が多い人ほど出やすいが、
+        票0の人も重み1で登場できる
+      */
+
+      totalWeight +=
+        votes[member.name] + 1;
+
+    });
+
+
+    let random =
+      Math.random() * totalWeight;
+
+
+    let selectedMember = null;
+
+
+    for(
+      const member of available
+    ) {
+
+      random -=
+        votes[member.name] + 1;
+
+
+      if(random <= 0) {
+
+        selectedMember = member;
+
+        break;
+
+      }
+
+    }
+
+
+    if(selectedMember) {
+
+      result.push(selectedMember);
+
+      available =
+        available.filter(
+          member =>
+            member.name !== selectedMember.name
+        );
+
+    }
+
+  }
+
+
+  /*
+    同じ4人の連続を避ける
+  */
+
+  const names =
+    result
+      .map(person => person.name)
+      .sort();
+
+
+  if(
+    names.join("|") ===
+    previousGroupNames.join("|")
+  ) {
+
+    return getWeightedFour(pool);
+
+  }
+
+
+  previousGroupNames = names;
+
+  return result;
+
+}
+
+
+/* =====================================
+   SHOW NEXT GAME
 ===================================== */
 
 function showNextGame() {
 
   selected = [];
 
-  let pool;
 
   if(round === 1) {
 
-    pool = members;
+    currentCandidates =
+      getRandomFour(members);
 
   } else {
 
-    pool = currentCandidates;
+    currentCandidates =
+      getWeightedFour(currentCandidatesPool);
 
   }
-
-  currentCandidates =
-    getRandomFour(pool);
 
 
   document
@@ -613,8 +750,6 @@ function confirmSelection() {
       : ROUND2_GAMES;
 
 
-  /* ROUND終了 */
-
   if(gameNumber >= totalGames) {
 
     finishRound();
@@ -633,18 +768,26 @@ function confirmSelection() {
    FINISH ROUND
 ===================================== */
 
-function finishRound() {
+let currentCandidatesPool = [];
 
-  /* ROUND 1終了 */
+
+function finishRound() {
 
   if(round === 1) {
 
-    currentCandidates =
+    /*
+      ROUND 1の票数上位12人
+    */
+
+    currentCandidatesPool =
       getTopMembers(12);
+
 
     round = 2;
 
     gameNumber = 0;
+
+    previousGroupNames = [];
 
     showNextGame();
 
@@ -652,8 +795,6 @@ function finishRound() {
 
   }
 
-
-  /* ROUND 2終了 */
 
   if(round === 2) {
 
@@ -668,7 +809,7 @@ function finishRound() {
 
 
 /* =====================================
-   GET TOP MEMBERS
+   TOP MEMBERS
 ===================================== */
 
 function getTopMembers(count) {
@@ -677,17 +818,16 @@ function getTopMembers(count) {
     .sort((a,b) => {
 
       const difference =
-        votes[b.name] - votes[a.name];
+        votes[b.name] -
+        votes[a.name];
 
-      /*
-        同票の場合はランダム
-      */
 
       if(difference === 0) {
 
         return Math.random() - 0.5;
 
       }
+
 
       return difference;
 
