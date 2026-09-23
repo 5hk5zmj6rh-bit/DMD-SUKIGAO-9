@@ -429,7 +429,7 @@ const members = [
   {name:"Nick",gen:"Gen 6"},
   {name:"Nan",gen:"Gen 6"},
   {name:"Ton",gen:"Gen 6"},
-  {name:"Reeon",gen:"Gen 6"},
+  {name:"Reeonn",gen:"Gen 6"},
   {name:"Few",gen:"Gen 6"},
   {name:"Thee",gen:"Gen 6"},
   {name:"JT",gen:"Gen 6"}
@@ -452,7 +452,7 @@ const photoFiles = {
   "Keng": "けん.jpg",
 
   "Few": "Few.jpg",
-  "Reeon": "Reeonn.jpg",
+  "Reeonn": "Reeonn.jpg",
   "Thee": "Thee.jpg",
 
   "Copper": "こぱ.jpg",
@@ -506,11 +506,8 @@ const photoFiles = {
 ===================================== */
 
 const ROUND1_GAMES = 30;
-
 const ROUND2_GAMES = 20;
-
 const ROUND3_GAMES = 15;
-
 const ROUND4_GAMES = 54;
 
 
@@ -519,29 +516,17 @@ const ROUND4_GAMES = 54;
 ===================================== */
 
 let round = 1;
-
 let gameNumber = 0;
-
 let currentCandidates = [];
-
 let selected = [];
-
 let votes = {};
-
 let round1Selected = {};
-
 let round2Selected = {};
-
 let round3Selected = {};
-
 let round4Wins = {};
-
 let round2Pool = [];
-
 let round3Pool = [];
-
 let final18 = [];
-
 let finalMatchups = [];
 
 
@@ -586,63 +571,43 @@ function shuffle(array) {
 function startGame() {
 
   round = 1;
-
   gameNumber = 0;
-
   selected = [];
-
   round2Pool = [];
-
   round3Pool = [];
-
   final18 = [];
-
   finalMatchups = [];
 
-
   votes = {};
-
   round1Selected = {};
-
   round2Selected = {};
-
   round3Selected = {};
-
   round4Wins = {};
-
 
   members.forEach(member => {
 
     votes[member.name] = 0;
-
     round1Selected[member.name] = 0;
-
     round2Selected[member.name] = 0;
-
     round3Selected[member.name] = 0;
-
     round4Wins[member.name] = 0;
 
   });
-
 
   document
     .getElementById("startScreen")
     .classList
     .remove("active");
 
-
   document
     .getElementById("resultScreen")
     .classList
     .remove("active");
 
-
   document
     .getElementById("gameScreen")
     .classList
     .add("active");
-
 
   showNextGame();
 
@@ -657,7 +622,6 @@ function weightedRandomMember(pool, scoreObject) {
 
   let total = 0;
 
-
   pool.forEach(member => {
 
     total +=
@@ -665,25 +629,19 @@ function weightedRandomMember(pool, scoreObject) {
 
   });
 
-
   let random =
     Math.random() * total;
-
 
   for(const member of pool) {
 
     random -=
       (scoreObject[member.name] || 0) + 1;
 
-
     if(random <= 0) {
-
       return member;
-
     }
 
   }
-
 
   return pool[
     Math.floor(
@@ -701,9 +659,7 @@ function weightedRandomMember(pool, scoreObject) {
 function getFourPeople(pool, scoreObject) {
 
   let result = [];
-
   let safety = 0;
-
 
   while(
     result.length < 4 &&
@@ -712,13 +668,11 @@ function getFourPeople(pool, scoreObject) {
 
     safety++;
 
-
     const person =
       weightedRandomMember(
         pool,
         scoreObject
       );
-
 
     if(
       person &&
@@ -733,7 +687,6 @@ function getFourPeople(pool, scoreObject) {
     }
 
   }
-
 
   return result;
 
@@ -762,19 +715,14 @@ function createRound2Pool() {
 
   let pool = [];
 
-
   members.forEach(member => {
-
     pool.push(member);
-
   });
-
 
   members.forEach(member => {
 
     const count =
       round1Selected[member.name];
-
 
     for(
       let i = 0;
@@ -787,7 +735,6 @@ function createRound2Pool() {
     }
 
   });
-
 
   return pool;
 
@@ -802,7 +749,6 @@ function getRound2Group() {
       createRound2Pool();
 
   }
-
 
   return getFourPeople(
     round2Pool,
@@ -829,13 +775,9 @@ function createRound3Pool() {
         round1Selected[b.name] +
         round2Selected[b.name];
 
-
       if(scoreA === scoreB) {
-
         return Math.random() - 0.5;
-
       }
-
 
       return scoreB - scoreA;
 
@@ -854,9 +796,7 @@ function getRound3Group() {
 
   }
 
-
   let score = {};
-
 
   round3Pool.forEach(member => {
 
@@ -865,7 +805,6 @@ function getRound3Group() {
       round2Selected[member.name];
 
   });
-
 
   return getFourPeople(
     round3Pool,
@@ -894,13 +833,9 @@ function createFinal18() {
         round2Selected[b.name] +
         round3Selected[b.name];
 
-
       if(scoreA === scoreB) {
-
         return Math.random() - 0.5;
-
       }
-
 
       return scoreB - scoreA;
 
@@ -918,17 +853,13 @@ function createRound4Matches() {
 
   let slots = [];
 
-
   final18.forEach(member => {
 
     for(let i = 0; i < 6; i++) {
-
       slots.push(member);
-
     }
 
   });
-
 
   for(
     let attempt = 0;
@@ -936,12 +867,9 @@ function createRound4Matches() {
     attempt++
   ) {
 
-    slots =
-      shuffle(slots);
-
+    slots = shuffle(slots);
 
     let valid = true;
-
 
     for(
       let i = 0;
@@ -955,21 +883,17 @@ function createRound4Matches() {
       ) {
 
         valid = false;
-
         break;
 
       }
 
     }
 
-
     if(valid) break;
 
   }
 
-
   let matches = [];
-
 
   for(
     let i = 0;
@@ -984,7 +908,6 @@ function createRound4Matches() {
 
   }
 
-
   return matches;
 
 }
@@ -997,7 +920,6 @@ function createRound4Matches() {
 function showNextGame() {
 
   selected = [];
-
 
   if(round === 1) {
 
@@ -1027,16 +949,13 @@ function showNextGame() {
 
   }
 
-
   document
     .getElementById("members")
     .innerHTML = "";
 
-
   document
     .getElementById("nextButton")
     .style.display = "none";
-
 
   if(round === 4) {
 
@@ -1044,7 +963,6 @@ function showNextGame() {
       .getElementById("progress")
       .textContent =
       `FINAL　${gameNumber + 1} / ${ROUND4_GAMES}`;
-
 
     document
       .getElementById("question")
@@ -1062,12 +980,10 @@ function showNextGame() {
           ? ROUND2_GAMES
           : ROUND3_GAMES;
 
-
     document
       .getElementById("progress")
       .textContent =
       `ROUND ${round}　${gameNumber + 1} / ${total}`;
-
 
     document
       .getElementById("question")
@@ -1076,17 +992,14 @@ function showNextGame() {
 
   }
 
-
   currentCandidates.forEach(
     (member,index) => {
 
       const element =
         document.createElement("div");
 
-
       element.className =
         "member";
-
 
       element.onclick =
         function() {
@@ -1098,10 +1011,8 @@ function showNextGame() {
 
         };
 
-
       const photo =
         photoFiles[member.name];
-
 
       element.innerHTML = `
 
@@ -1124,7 +1035,6 @@ function showNextGame() {
         </div>
 
       `;
-
 
       document
         .getElementById("members")
@@ -1150,14 +1060,12 @@ function toggleMember(
       ? 1
       : 2;
 
-
   if(selected.includes(index)) {
 
     selected =
       selected.filter(
         i => i !== index
       );
-
 
     element
       .classList
@@ -1170,21 +1078,16 @@ function toggleMember(
     if(
       selected.length >= limit
     ) {
-
       return;
-
     }
 
-
     selected.push(index);
-
 
     element
       .classList
       .add("selected");
 
   }
-
 
   document
     .getElementById("nextButton")
@@ -1202,14 +1105,12 @@ function toggleMember(
 
 function confirmSelection() {
 
-
   if(round === 1) {
 
     selected.forEach(index => {
 
       const member =
         currentCandidates[index];
-
 
       round1Selected[
         member.name
@@ -1221,9 +1122,7 @@ function confirmSelection() {
 
     });
 
-
     gameNumber++;
-
 
     if(
       gameNumber >=
@@ -1234,11 +1133,9 @@ function confirmSelection() {
         createRound2Pool();
 
       round = 2;
-
       gameNumber = 0;
 
     }
-
 
     showNextGame();
 
@@ -1254,7 +1151,6 @@ function confirmSelection() {
       const member =
         currentCandidates[index];
 
-
       round2Selected[
         member.name
       ]++;
@@ -1265,9 +1161,7 @@ function confirmSelection() {
 
     });
 
-
     gameNumber++;
-
 
     if(
       gameNumber >=
@@ -1278,11 +1172,9 @@ function confirmSelection() {
         createRound3Pool();
 
       round = 3;
-
       gameNumber = 0;
 
     }
-
 
     showNextGame();
 
@@ -1298,7 +1190,6 @@ function confirmSelection() {
       const member =
         currentCandidates[index];
 
-
       round3Selected[
         member.name
       ]++;
@@ -1309,9 +1200,7 @@ function confirmSelection() {
 
     });
 
-
     gameNumber++;
-
 
     if(
       gameNumber >=
@@ -1321,17 +1210,13 @@ function confirmSelection() {
       final18 =
         createFinal18();
 
-
       finalMatchups =
         createRound4Matches();
 
-
       round = 4;
-
       gameNumber = 0;
 
     }
-
 
     showNextGame();
 
@@ -1347,14 +1232,11 @@ function confirmSelection() {
         selected[0]
       ];
 
-
     round4Wins[
       winner.name
     ]++;
 
-
     gameNumber++;
-
 
     if(
       gameNumber >=
@@ -1366,7 +1248,6 @@ function confirmSelection() {
       return;
 
     }
-
 
     showNextGame();
 
@@ -1391,7 +1272,6 @@ function showFinalResult() {
         const winsB =
           round4Wins[b.name];
 
-
         if(winsA === winsB) {
 
           const totalA =
@@ -1404,39 +1284,30 @@ function showFinalResult() {
             round2Selected[b.name] +
             round3Selected[b.name];
 
-
           if(totalA === totalB) {
-
             return Math.random() - 0.5;
-
           }
-
 
           return totalB - totalA;
 
         }
 
-
         return winsB - winsA;
 
       });
 
-
   const top9 =
     ranking.slice(0,9);
-
 
   document
     .getElementById("gameScreen")
     .classList
     .remove("active");
 
-
   document
     .getElementById("resultScreen")
     .classList
     .add("active");
-
 
   const displayOrder = [
 
@@ -1454,7 +1325,6 @@ function showFinalResult() {
 
   ];
 
-
   const numbers = [
 
     4,5,6,
@@ -1463,15 +1333,12 @@ function showFinalResult() {
 
   ];
 
-
   const grid =
     document.getElementById(
       "resultGrid"
     );
 
-
   grid.innerHTML = "";
-
 
   displayOrder.forEach(
     (member,index) => {
@@ -1479,14 +1346,11 @@ function showFinalResult() {
       const card =
         document.createElement("div");
 
-
       card.className =
         "final-card";
 
-
       const photo =
         photoFiles[member.name];
-
 
       card.innerHTML = `
 
@@ -1514,21 +1378,17 @@ function showFinalResult() {
 
       `;
 
-
       grid.appendChild(card);
 
     }
   );
-
 
   const rankList =
     document.getElementById(
       "rankList"
     );
 
-
   rankList.innerHTML = "";
-
 
   ranking.forEach(
     (member,index) => {
@@ -1536,10 +1396,8 @@ function showFinalResult() {
       const row =
         document.createElement("div");
 
-
       row.className =
         "rank-row";
-
 
       row.innerHTML = `
 
@@ -1556,7 +1414,6 @@ function showFinalResult() {
         </div>
 
       `;
-
 
       rankList.appendChild(row);
 
