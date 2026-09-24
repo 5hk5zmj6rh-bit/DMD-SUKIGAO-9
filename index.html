@@ -3,16 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>DMD SUKIGAO 9</title>
+
 <style>
+
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   min-height: 100vh;
   background: #fff9fc;
   color: #30252d;
+
   font-family:
     -apple-system,
     BlinkMacSystemFont,
@@ -20,12 +25,14 @@ body {
     "Yu Gothic",
     sans-serif;
 }
+
 .container {
   width: 100%;
   max-width: 720px;
   margin: 0 auto;
   padding: 30px 18px 50px;
 }
+
 .card {
   background: white;
   border: 1px solid #ead8e3;
@@ -34,31 +41,38 @@ body {
   text-align: center;
   box-shadow: 0 8px 30px rgba(170,90,130,.08);
 }
+
 .screen {
   display: none;
 }
+
 .screen.active {
   display: block;
 }
+
 .small-title {
   color: #a36b88;
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 3px;
 }
+
 h1 {
   margin: 12px 0 0;
   font-size: 34px;
   line-height: 1.3;
 }
+
 .subtitle {
   margin-top: 20px;
   line-height: 1.8;
   font-weight: bold;
 }
+
 .heart {
   color: #e98ab5;
 }
+
 .start-button,
 .next-button,
 .retry-button {
@@ -73,26 +87,31 @@ h1 {
   font-weight: bold;
   cursor: pointer;
 }
+
 .start-button:active,
 .next-button:active,
 .retry-button:active {
   transform: scale(.98);
 }
+
 .progress {
   color: #a36b88;
   font-size: 14px;
   margin-bottom: 8px;
 }
+
 .question {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 18px;
 }
+
 .members {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
+
 .member {
   border: 3px solid transparent;
   background: white;
@@ -102,11 +121,13 @@ h1 {
   cursor: pointer;
   transition: .15s;
 }
+
 .member.selected {
   border-color: #e98ab5;
   background: #fff0f7;
   transform: scale(.97);
 }
+
 .photo {
   width: 100%;
   aspect-ratio: 1;
@@ -120,34 +141,40 @@ h1 {
   font-weight: bold;
   overflow: hidden;
 }
+
 .photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+
 .member-name {
   margin-top: 9px;
   font-weight: bold;
   font-size: 17px;
 }
+
 .member-gen {
   margin-top: 3px;
   color: #999;
   font-size: 12px;
 }
+
 .note {
   color: #aaa0a6;
   font-size: 12px;
   margin-top: 20px;
   line-height: 1.7;
 }
+
 .final-grid {
   margin-top: 25px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 9px;
 }
+
 .final-card {
   background: white;
   border: 1px solid #ead8e3;
@@ -155,6 +182,7 @@ h1 {
   padding: 8px;
   box-shadow: 0 5px 15px rgba(0,0,0,.08);
 }
+
 .final-photo {
   width: 100%;
   aspect-ratio: 1;
@@ -168,33 +196,39 @@ h1 {
   font-weight: bold;
   overflow: hidden;
 }
+
 .final-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+
 .final-number {
   color: #a36b88;
   font-size: 12px;
   font-weight: bold;
   margin-top: 6px;
 }
+
 .final-name {
   font-weight: bold;
   font-size: 14px;
   margin-top: 3px;
   word-break: break-word;
 }
+
 .final-gen {
   color: #999;
   font-size: 10px;
   margin-top: 2px;
 }
+
 .rank-list {
   margin-top: 25px;
   text-align: left;
 }
+
 .rank-row {
   display: flex;
   align-items: center;
@@ -202,66 +236,70 @@ h1 {
   padding: 9px 5px;
   border-bottom: 1px solid #f0e4eb;
 }
+
 .rank-number {
   width: 30px;
   font-weight: bold;
   color: #a36b88;
 }
+
 .rank-name {
   flex: 1;
   font-weight: bold;
 }
+
 .rank-wins {
   color: #999;
   font-size: 12px;
 }
+
 </style>
 </head>
+
 <body>
+
 <main class="container">
-<!-- =========================
-     START
-========================= -->
+
 <section id="startScreen" class="card screen active">
+
   <div class="small-title">
     DMD SUKIGAO 9
   </div>
+
   <h1>
     DMD<br>
     好き顔9選メーカー
   </h1>
+
   <div class="subtitle">
     DMDメンバーから<br>
     「顔が好き」TOP9を決めよう
     <span class="heart">💗</span>
   </div>
+
   <div class="note">
     直感で選んでね。<br>
     同じ人が何度も登場することもあるよ♡
   </div>
+
   <button
     class="start-button"
     onclick="startGame()"
   >
     はじめる 💗
   </button>
+
 </section>
-<!-- =========================
-     GAME
-========================= -->
+
+
 <section id="gameScreen" class="card screen">
-  <div
-    id="progress"
-    class="progress"
-  ></div>
-  <div
-    id="question"
-    class="question"
-  ></div>
-  <div
-    id="members"
-    class="members"
-  ></div>
+
+  <div id="progress" class="progress"></div>
+
+  <div id="question" class="question"></div>
+
+  <div id="members" class="members"></div>
+
   <button
     id="nextButton"
     class="next-button"
@@ -270,42 +308,48 @@ h1 {
   >
     決定 💗
   </button>
+
 </section>
-<!-- =========================
-     RESULT
-========================= -->
+
+
 <section id="resultScreen" class="card screen">
+
   <div class="small-title">
     DMD SUKIGAO 9
   </div>
+
   <h1>
     好き顔9 💗
   </h1>
+
   <div class="subtitle">
     あなたのTOP9！
   </div>
-  <div
-    id="resultGrid"
-    class="final-grid"
-  ></div>
-  <div
-    id="rankList"
-    class="rank-list"
-  ></div>
+
+  <div id="resultGrid" class="final-grid"></div>
+
+  <div id="rankList" class="rank-list"></div>
+
   <button
     class="retry-button"
     onclick="startGame()"
   >
     もう一回やる
   </button>
+
 </section>
+
 </main>
+
+
 <script>
+
 /* =====================================
    DMD MEMBERS
 ===================================== */
+
 const members = [
-  /* GEN 1 */
+
   {name:"Max",gen:"Gen 1"},
   {name:"Zee",gen:"Gen 1"},
   {name:"Poppy",gen:"Gen 1"},
@@ -313,14 +357,14 @@ const members = [
   {name:"Mark",gen:"Gen 1"},
   {name:"Jimmy",gen:"Gen 1"},
   {name:"Tommy",gen:"Gen 1"},
-  /* GEN 2 */
+
   {name:"NuNew",gen:"Gen 2"},
   {name:"Net",gen:"Gen 2"},
   {name:"Nat",gen:"Gen 2"},
   {name:"Yim",gen:"Gen 2"},
   {name:"Tutor",gen:"Gen 2"},
   {name:"James",gen:"Gen 2"},
-  /* GEN 3 */
+
   {name:"Tle",gen:"Gen 3"},
   {name:"Keng",gen:"Gen 3"},
   {name:"FirstOne",gen:"Gen 3"},
@@ -330,7 +374,7 @@ const members = [
   {name:"Kong",gen:"Gen 3"},
   {name:"Gems",gen:"Gen 3"},
   {name:"TeeTee",gen:"Gen 3"},
-  /* GEN 4 */
+
   {name:"Kim",gen:"Gen 4"},
   {name:"JJ",gen:"Gen 4"},
   {name:"Ohm",gen:"Gen 4"},
@@ -339,7 +383,7 @@ const members = [
   {name:"Patji",gen:"Gen 4"},
   {name:"Por",gen:"Gen 4"},
   {name:"Save",gen:"Gen 4"},
-  /* GEN 5 */
+
   {name:"Porsche",gen:"Gen 5"},
   {name:"Copper",gen:"Gen 5"},
   {name:"Otto",gen:"Gen 5"},
@@ -349,7 +393,7 @@ const members = [
   {name:"Wave",gen:"Gen 5"},
   {name:"Fifa",gen:"Gen 5"},
   {name:"Pete",gen:"Gen 5"},
-  /* GEN 6 */
+
   {name:"Teddy",gen:"Gen 6"},
   {name:"Nick",gen:"Gen 6"},
   {name:"Nan",gen:"Gen 6"},
@@ -358,49 +402,169 @@ const members = [
   {name:"Few",gen:"Gen 6"},
   {name:"Thee",gen:"Gen 6"},
   {name:"JT",gen:"Gen 6"}
+
 ];
+
+
+/* =====================================
+   PHOTO FILE NAMES
+===================================== */
+
+/*
+  実際のGitHubファイル名を指定。
+
+  ここはメンバー名と違っていてもOK。
+*/
+
+const photoFiles = {
+
+  "Auau": "Auau.jpg",
+
+  "Copper": "Copper .jpg",
+
+  "Fifa": "FIFA.jpg",
+
+  "Few": "Few.jpg",
+
+  "FirstOne": "Firstone .jpg",
+
+  "Gems": "Gems .jpg",
+
+  "JJ": "JJ.jpg",
+
+  "JT": "JT.jpg",
+
+  "James": "James.jpg",
+
+  "Jimmy": "Jimmy .jpg",
+
+  "Keng": "Keng.jpg",
+
+  "Kim": "Kim.jpg",
+
+  "Kong": "Kong.jpg",
+
+  "Latte": "Latte .jpg",
+
+  "Mark": "Mark .jpg",
+
+  "Max": "Max .jpg",
+
+  "Namping": "Namping .jpg",
+
+  "Nan": "Nan.jpg",
+
+  "Nat": "Nat.jpg",
+
+  "Net": "Net .jpg",
+
+  "Nick": "Nick.jpg",
+
+  "North": "North.jpg",
+
+  "NuNew": "Nunew .jpg",
+
+  "Ohm": "Ohm.jpg",
+
+  "Otto": "Otto.jpg",
+
+  "Park": "Park .jpg",
+
+  "Patji": "Patji.jpg",
+
+  "Pete": "Pete .jpg",
+
+  "Phupha": "Phupha .jpg",
+
+  "Poppy": "Poppy .jpg",
+
+  "Por": "Por .jpg",
+
+  "Porsche": "Porshe .jpg",
+
+  "Pung": "Pung .jpg",
+
+  "Reeonn": "Reeonn .jpg",
+
+  "Ryujin": "Ryujin.jpg",
+
+  "Save": "Save .jpg",
+
+  "Teddy": "Teddy.jpg",
+
+  "TeeTee": "Teeter.jpg",
+
+  "Thee": "Thee.jpg",
+
+  "Thomas": "Thomas .jpg",
+
+  "Tle": "Tle .jpg",
+
+  "Tommy": "Tommy .jpg",
+
+  "Ton": "Ton.jpg",
+
+  "Tutor": "Tutor .jpg",
+
+  "Wave": "Wave.jpg",
+
+  "Yim": "Yim.jpg",
+
+  "Zee": "Zee.jpg"
+
+};
+
+
 /* =====================================
    SETTINGS
 ===================================== */
+
 const ROUND1_GAMES = 30;
 const ROUND2_GAMES = 20;
 const ROUND3_GAMES = 15;
-/*
-  ROUND4は18人全員が6回ずつ登場
-  18 × 6 ÷ 2 = 54試合
-*/
 const ROUND4_GAMES = 54;
+
+
 /* =====================================
    VARIABLES
 ===================================== */
+
 let round = 1;
 let gameNumber = 0;
 let currentCandidates = [];
 let selected = [];
+
 let votes = {};
 let round1Selected = {};
 let round2Selected = {};
 let round3Selected = {};
 let round4Wins = {};
+
 let round2Pool = [];
 let round3Pool = [];
 let final18 = [];
 let finalMatchups = [];
-let finalWinners = [];
+
+
 /* =====================================
    SHUFFLE
 ===================================== */
+
 function shuffle(array) {
+
   const result = [...array];
+
   for (
     let i = result.length - 1;
     i > 0;
     i--
   ) {
+
     const j =
       Math.floor(
         Math.random() * (i + 1)
       );
+
     [
       result[i],
       result[j]
@@ -408,678 +572,966 @@ function shuffle(array) {
       result[j],
       result[i]
     ];
+
   }
+
   return result;
+
 }
+
+
 /* =====================================
    START
 ===================================== */
+
 function startGame() {
+
   round = 1;
   gameNumber = 0;
+
   currentCandidates = [];
   selected = [];
+
   round2Pool = [];
   round3Pool = [];
   final18 = [];
   finalMatchups = [];
-  finalWinners = [];
+
   votes = {};
   round1Selected = {};
   round2Selected = {};
   round3Selected = {};
   round4Wins = {};
+
   members.forEach(member => {
+
     votes[member.name] = 0;
     round1Selected[member.name] = 0;
     round2Selected[member.name] = 0;
     round3Selected[member.name] = 0;
     round4Wins[member.name] = 0;
+
   });
+
   document
     .getElementById("startScreen")
     .classList
     .remove("active");
+
   document
     .getElementById("resultScreen")
     .classList
     .remove("active");
+
   document
     .getElementById("gameScreen")
     .classList
     .add("active");
+
   showNextGame();
+
 }
+
+
 /* =====================================
    WEIGHTED RANDOM
 ===================================== */
-function weightedRandomMember(pool, scoreObject) {
+
+function weightedRandomMember(
+  pool,
+  scoreObject
+) {
+
   let total = 0;
+
   pool.forEach(member => {
+
     total +=
       (scoreObject[member.name] || 0) + 1;
+
   });
+
   let random =
     Math.random() * total;
+
   for(const member of pool) {
+
     random -=
       (scoreObject[member.name] || 0) + 1;
+
     if(random <= 0) {
+
       return member;
+
     }
+
   }
+
   return pool[
     Math.floor(
       Math.random() * pool.length
     )
   ];
+
 }
+
+
 /* =====================================
-   GET 4 PEOPLE
+   GET FOUR PEOPLE
 ===================================== */
-function getFourPeople(pool, scoreObject) {
+
+function getFourPeople(
+  pool,
+  scoreObject
+) {
+
   let result = [];
   let safety = 0;
+
   while(
     result.length < 4 &&
     safety < 1000
   ) {
+
     safety++;
+
     const person =
       weightedRandomMember(
         pool,
         scoreObject
       );
+
     if(
       person &&
       !result.some(
-        x =>
-          x.name === person.name
+        x => x.name === person.name
       )
     ) {
+
       result.push(person);
+
     }
+
   }
+
   return result;
+
 }
+
+
 /* =====================================
    ROUND 1
 ===================================== */
+
 function getRound1Group() {
+
   return getFourPeople(
     members,
     round1Selected
   );
+
 }
+
+
 /* =====================================
    ROUND 2
 ===================================== */
+
 function createRound2Pool() {
+
   let pool = [];
+
   members.forEach(member => {
+
     pool.push(member);
+
   });
+
   members.forEach(member => {
+
     const count =
       round1Selected[member.name];
+
     for(
       let i = 0;
       i < Math.min(count, 4);
       i++
     ) {
+
       pool.push(member);
+
     }
+
   });
+
   return pool;
+
 }
+
+
 function getRound2Group() {
+
   if(round2Pool.length === 0) {
+
     round2Pool =
       createRound2Pool();
+
   }
+
   return getFourPeople(
     round2Pool,
     round1Selected
   );
+
 }
+
+
 /* =====================================
    ROUND 3
 ===================================== */
+
 function createRound3Pool() {
+
   return [...members]
     .sort((a,b) => {
+
       const scoreA =
         round1Selected[a.name] +
         round2Selected[a.name];
+
       const scoreB =
         round1Selected[b.name] +
         round2Selected[b.name];
+
       if(scoreA === scoreB) {
+
         return Math.random() - 0.5;
+
       }
+
       return scoreB - scoreA;
+
     })
     .slice(0,24);
+
 }
+
+
 function getRound3Group() {
+
   if(round3Pool.length === 0) {
+
     round3Pool =
       createRound3Pool();
+
   }
+
   let score = {};
+
   round3Pool.forEach(member => {
+
     score[member.name] =
       round1Selected[member.name] +
       round2Selected[member.name];
+
   });
+
   return getFourPeople(
     round3Pool,
     score
   );
+
 }
+
+
 /* =====================================
-   MAKE FINAL 18
+   FINAL 18
 ===================================== */
+
 function createFinal18() {
+
   return [...members]
     .sort((a,b) => {
+
       const scoreA =
         round1Selected[a.name] +
         round2Selected[a.name] +
         round3Selected[a.name];
+
       const scoreB =
         round1Selected[b.name] +
         round2Selected[b.name] +
         round3Selected[b.name];
+
       if(scoreA === scoreB) {
+
         return Math.random() - 0.5;
+
       }
+
       return scoreB - scoreA;
+
     })
     .slice(0,18);
+
 }
+
+
 /* =====================================
-   ROUND 4 MATCHES
+   FINAL MATCHES
 ===================================== */
+
 function createRound4Matches() {
+
   let slots = [];
+
   final18.forEach(member => {
-    for(
-      let i = 0;
-      i < 6;
-      i++
-    ) {
+
+    for(let i = 0; i < 6; i++) {
+
       slots.push(member);
+
     }
+
   });
+
   for(
     let attempt = 0;
     attempt < 1000;
     attempt++
   ) {
-    slots =
-      shuffle(slots);
+
+    slots = shuffle(slots);
+
     let valid = true;
+
     for(
       let i = 0;
       i < slots.length;
       i += 2
     ) {
+
       if(
         slots[i].name ===
         slots[i + 1].name
       ) {
+
         valid = false;
         break;
+
       }
+
     }
-    if(valid) {
-      break;
-    }
+
+    if(valid) break;
+
   }
+
   let matches = [];
+
   for(
     let i = 0;
     i < slots.length;
     i += 2
   ) {
+
     matches.push([
       slots[i],
       slots[i + 1]
     ]);
+
   }
+
   return matches;
+
 }
+
+
 /* =====================================
-   PHOTO
+   PHOTO HTML
 ===================================== */
-/*
-  写真ファイル名について
-  例：
-  Max.jpg
-  Max .jpg
-  どちらでも読み込めるようにする。
-*/
+
 function createPhotoHTML(
   member,
   className
 ) {
-  const normalFile =
-    `${member.name}.jpg`;
-  const spaceFile =
-    `${member.name} .jpg`;
-  return `
-    <div class="${className}">
-      <img
-        src="${normalFile}"
-        alt="${member.name}"
-        data-space-file="${spaceFile}"
-        data-member-name="${member.name}"
-        data-tried-space="false"
-        onerror="tryNextPhoto(this)"
-      >
-    </div>
-  `;
-}
-/* =====================================
-   PHOTO FALLBACK
-===================================== */
-function tryNextPhoto(img) {
+
+  const file =
+    photoFiles[member.name];
+
   /*
-    まずスペースなし。
-    例：
-    Max.jpg
+    ファイルが登録されていれば
+    そのファイルを直接読む。
   */
-  if(
-    img.dataset.triedSpace === "false"
-  ) {
-    img.dataset.triedSpace = "true";
-    img.src =
-      img.dataset.spaceFile;
-    return;
+
+  if(file) {
+
+    return `
+
+      <div class="${className}">
+
+        <img
+          src="${encodeURI(file)}"
+          alt="${member.name}"
+          onerror="photoError(this, '${member.name}')"
+        >
+
+      </div>
+
+    `;
+
   }
+
   /*
-    それでもなければ
-    頭文字に戻す。
+    万一ファイル名登録がない場合
   */
+
+  return `
+
+    <div class="${className}">
+      ${member.name.charAt(0)}
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================
+   PHOTO ERROR
+===================================== */
+
+function photoError(
+  img,
+  memberName
+) {
+
+  /*
+    写真が読み込めなかった場合でも
+    画面を壊さない。
+  */
+
+  img.style.display = "none";
+
   const parent =
     img.parentElement;
+
   parent.innerHTML =
-    img.dataset.memberName.charAt(0);
+    `<span>${memberName.charAt(0)}</span>`;
+
 }
+
+
 /* =====================================
    SHOW GAME
 ===================================== */
+
 function showNextGame() {
+
   selected = [];
+
   if(round === 1) {
+
     currentCandidates =
       getRound1Group();
+
   }
+
   else if(round === 2) {
+
     currentCandidates =
       getRound2Group();
+
   }
+
   else if(round === 3) {
+
     currentCandidates =
       getRound3Group();
+
   }
+
   else {
+
     currentCandidates =
       finalMatchups[gameNumber];
+
   }
+
   document
     .getElementById("members")
     .innerHTML = "";
+
   document
     .getElementById("nextButton")
     .style.display = "none";
-  /*
-    ROUND 4
-  */
+
+
   if(round === 4) {
+
     document
       .getElementById("progress")
       .textContent =
       `FINAL　${gameNumber + 1} / ${ROUND4_GAMES}`;
+
     document
       .getElementById("question")
       .textContent =
       "この2人なら、顔が好きなのはどっち？♡";
+
   }
+
   else {
+
     const total =
       round === 1
         ? ROUND1_GAMES
         : round === 2
           ? ROUND2_GAMES
           : ROUND3_GAMES;
+
     document
       .getElementById("progress")
       .textContent =
       `ROUND ${round}　${gameNumber + 1} / ${total}`;
+
     document
       .getElementById("question")
       .textContent =
       "この4人から好きな2人を選んでね♡";
+
   }
-  /*
-    メンバー表示
-  */
+
+
   currentCandidates.forEach(
     (member,index) => {
+
       const element =
         document.createElement("div");
+
       element.className =
         "member";
+
       element.onclick =
         function() {
+
           toggleMember(
             element,
             index
           );
+
         };
+
       element.innerHTML = `
+
         ${createPhotoHTML(
           member,
           "photo"
         )}
+
         <div class="member-name">
           ${member.name}
         </div>
+
         <div class="member-gen">
           ${member.gen}
         </div>
+
       `;
+
       document
         .getElementById("members")
         .appendChild(element);
+
     }
   );
+
 }
+
+
 /* =====================================
    SELECT
 ===================================== */
+
 function toggleMember(
   element,
   index
 ) {
+
   const limit =
     round === 4
       ? 1
       : 2;
+
   if(selected.includes(index)) {
+
     selected =
       selected.filter(
         i => i !== index
       );
+
     element
       .classList
       .remove("selected");
+
   }
+
   else {
+
     if(
       selected.length >= limit
     ) {
+
       return;
+
     }
+
     selected.push(index);
+
     element
       .classList
       .add("selected");
+
   }
+
   document
     .getElementById("nextButton")
     .style.display =
       selected.length === limit
         ? "block"
         : "none";
+
 }
+
+
 /* =====================================
    CONFIRM
 ===================================== */
+
 function confirmSelection() {
-  /* ===============================
-     ROUND 1
-  =============================== */
+
   if(round === 1) {
+
     selected.forEach(index => {
+
       const member =
         currentCandidates[index];
+
       round1Selected[
         member.name
       ]++;
+
       votes[
         member.name
       ]++;
+
     });
+
     gameNumber++;
+
     if(
       gameNumber >=
       ROUND1_GAMES
     ) {
+
       round2Pool =
         createRound2Pool();
+
       round = 2;
       gameNumber = 0;
+
     }
+
     showNextGame();
+
     return;
+
   }
-  /* ===============================
-     ROUND 2
-  =============================== */
+
+
   if(round === 2) {
+
     selected.forEach(index => {
+
       const member =
         currentCandidates[index];
+
       round2Selected[
         member.name
       ]++;
+
       votes[
         member.name
       ]++;
+
     });
+
     gameNumber++;
+
     if(
       gameNumber >=
       ROUND2_GAMES
     ) {
+
       round3Pool =
         createRound3Pool();
+
       round = 3;
       gameNumber = 0;
+
     }
+
     showNextGame();
+
     return;
+
   }
-  /* ===============================
-     ROUND 3
-  =============================== */
+
+
   if(round === 3) {
+
     selected.forEach(index => {
+
       const member =
         currentCandidates[index];
+
       round3Selected[
         member.name
       ]++;
+
       votes[
         member.name
       ]++;
+
     });
+
     gameNumber++;
+
     if(
       gameNumber >=
       ROUND3_GAMES
     ) {
+
       final18 =
         createFinal18();
+
       finalMatchups =
         createRound4Matches();
+
       round = 4;
       gameNumber = 0;
+
     }
+
     showNextGame();
+
     return;
+
   }
-  /* ===============================
-     ROUND 4
-  =============================== */
+
+
   if(round === 4) {
+
     const winner =
       currentCandidates[
         selected[0]
       ];
+
     round4Wins[
       winner.name
     ]++;
+
     gameNumber++;
+
     if(
       gameNumber >=
       ROUND4_GAMES
     ) {
+
       showFinalResult();
+
       return;
+
     }
+
     showNextGame();
+
   }
+
 }
+
+
 /* =====================================
    FINAL RESULT
 ===================================== */
+
 function showFinalResult() {
-  /*
-    ROUND4の勝利数で
-    18人をランキング。
-    全員6回ずつ登場しているので、
-    勝利数をそのまま比較できる。
-  */
+
   const ranking =
     [...final18]
       .sort((a,b) => {
+
         const winsA =
           round4Wins[a.name];
+
         const winsB =
           round4Wins[b.name];
+
         if(
           winsA === winsB
         ) {
-          /*
-            同勝利数なら
-            ROUND1〜3の選択数で
-            タイブレーク
-          */
+
           const totalA =
             round1Selected[a.name] +
             round2Selected[a.name] +
             round3Selected[a.name];
+
           const totalB =
             round1Selected[b.name] +
             round2Selected[b.name] +
             round3Selected[b.name];
+
           if(totalA === totalB) {
+
             return Math.random() - 0.5;
+
           }
+
           return totalB - totalA;
+
         }
+
         return winsB - winsA;
+
       });
-  /*
-    TOP9
-  */
+
+
   const top9 =
     ranking.slice(0,9);
-  /*
-    画面切り替え
-  */
+
+
   document
     .getElementById("gameScreen")
     .classList
     .remove("active");
+
   document
     .getElementById("resultScreen")
     .classList
     .add("active");
-  /*
-    9マス
-      4 5 6
-      2 1 3
-      7 8 9
-  */
+
+
   const displayOrder = [
+
     top9[3],
     top9[4],
     top9[5],
+
     top9[1],
     top9[0],
     top9[2],
+
     top9[6],
     top9[7],
     top9[8]
+
   ];
+
+
   const numbers = [
+
     4,5,6,
     2,1,3,
     7,8,9
+
   ];
+
+
   const grid =
     document.getElementById(
       "resultGrid"
     );
+
   grid.innerHTML = "";
+
+
   displayOrder.forEach(
     (member,index) => {
+
       const card =
         document.createElement("div");
+
       card.className =
         "final-card";
+
       card.innerHTML = `
+
         ${createPhotoHTML(
           member,
           "final-photo"
         )}
+
         <div class="final-number">
           ${numbers[index]}
         </div>
+
         <div class="final-name">
           ${member.name}
         </div>
+
         <div class="final-gen">
           ${member.gen}
         </div>
+
       `;
+
       grid.appendChild(card);
+
     }
   );
-  /*
-    1〜18位一覧
-  */
+
+
   const rankList =
     document.getElementById(
       "rankList"
     );
+
   rankList.innerHTML = "";
+
+
   ranking.forEach(
     (member,index) => {
+
       const row =
         document.createElement("div");
+
       row.className =
         "rank-row";
+
       row.innerHTML = `
+
         <div class="rank-number">
           ${index + 1}位
         </div>
+
         <div class="rank-name">
           ${member.name}
         </div>
+
         <div class="rank-wins">
           ${round4Wins[member.name]}勝
         </div>
+
       `;
+
       rankList.appendChild(row);
+
     }
   );
+
 }
+
 </script>
+
 </body>
-</html
+</html>
