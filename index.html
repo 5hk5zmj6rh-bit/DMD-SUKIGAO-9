@@ -260,6 +260,8 @@ h1 {
 
 <main class="container">
 
+<!-- START -->
+
 <section id="startScreen" class="card screen active">
 
   <div class="small-title">
@@ -292,6 +294,8 @@ h1 {
 </section>
 
 
+<!-- GAME -->
+
 <section id="gameScreen" class="card screen">
 
   <div id="progress" class="progress"></div>
@@ -311,6 +315,8 @@ h1 {
 
 </section>
 
+
+<!-- RESULT -->
 
 <section id="resultScreen" class="card screen">
 
@@ -350,6 +356,8 @@ h1 {
 
 const members = [
 
+  /* GEN 1 */
+
   {name:"Max",gen:"Gen 1"},
   {name:"Zee",gen:"Gen 1"},
   {name:"Poppy",gen:"Gen 1"},
@@ -358,12 +366,16 @@ const members = [
   {name:"Jimmy",gen:"Gen 1"},
   {name:"Tommy",gen:"Gen 1"},
 
+  /* GEN 2 */
+
   {name:"NuNew",gen:"Gen 2"},
   {name:"Net",gen:"Gen 2"},
   {name:"Nat",gen:"Gen 2"},
   {name:"Yim",gen:"Gen 2"},
   {name:"Tutor",gen:"Gen 2"},
   {name:"James",gen:"Gen 2"},
+
+  /* GEN 3 */
 
   {name:"Tle",gen:"Gen 3"},
   {name:"Keng",gen:"Gen 3"},
@@ -375,6 +387,8 @@ const members = [
   {name:"Gems",gen:"Gen 3"},
   {name:"TeeTee",gen:"Gen 3"},
 
+  /* GEN 4 */
+
   {name:"Kim",gen:"Gen 4"},
   {name:"JJ",gen:"Gen 4"},
   {name:"Ohm",gen:"Gen 4"},
@@ -383,6 +397,8 @@ const members = [
   {name:"Patji",gen:"Gen 4"},
   {name:"Por",gen:"Gen 4"},
   {name:"Save",gen:"Gen 4"},
+
+  /* GEN 5 */
 
   {name:"Porsche",gen:"Gen 5"},
   {name:"Copper",gen:"Gen 5"},
@@ -393,6 +409,8 @@ const members = [
   {name:"Wave",gen:"Gen 5"},
   {name:"Fifa",gen:"Gen 5"},
   {name:"Pete",gen:"Gen 5"},
+
+  /* GEN 6 */
 
   {name:"Teddy",gen:"Gen 6"},
   {name:"Nick",gen:"Gen 6"},
@@ -408,13 +426,8 @@ const members = [
 
 /* =====================================
    PHOTO FILE NAMES
+   GitHubにある実際の名前をそのまま指定
 ===================================== */
-
-/*
-  実際のGitHubファイル名を指定。
-
-  ここはメンバー名と違っていてもOK。
-*/
 
 const photoFiles = {
 
@@ -458,19 +471,19 @@ const photoFiles = {
 
   "Net": "Net .jpg",
 
-  "Nick": "Nick.jpg",
+  "Nick": "Nick .jpg",
 
   "North": "North.jpg",
 
   "NuNew": "Nunew .jpg",
 
-  "Ohm": "Ohm.jpg",
+  "Ohm": "Ohm .jpg",
 
-  "Otto": "Otto.jpg",
+  "Otto": "Otto .jpg",
 
   "Park": "Park .jpg",
 
-  "Patji": "Patji.jpg",
+  "Patji": "Patji .jpg",
 
   "Pete": "Pete .jpg",
 
@@ -948,7 +961,7 @@ function createRound4Matches() {
 
 
 /* =====================================
-   PHOTO HTML
+   PHOTO
 ===================================== */
 
 function createPhotoHTML(
@@ -959,37 +972,35 @@ function createPhotoHTML(
   const file =
     photoFiles[member.name];
 
-  /*
-    ファイルが登録されていれば
-    そのファイルを直接読む。
-  */
-
-  if(file) {
+  if(!file) {
 
     return `
-
       <div class="${className}">
-
-        <img
-          src="${encodeURI(file)}"
-          alt="${member.name}"
-          onerror="photoError(this, '${member.name}')"
-        >
-
+        ${member.name.charAt(0)}
       </div>
-
     `;
 
   }
 
   /*
-    万一ファイル名登録がない場合
+    encodeURIで
+    スペースなどをURL用に変換
   */
+
+  const photoURL =
+    encodeURI("./" + file);
 
   return `
 
     <div class="${className}">
-      ${member.name.charAt(0)}
+
+      <img
+        src="${photoURL}"
+        alt="${member.name}"
+        loading="eager"
+        onerror="photoError(this)"
+      >
+
     </div>
 
   `;
@@ -997,19 +1008,7 @@ function createPhotoHTML(
 }
 
 
-/* =====================================
-   PHOTO ERROR
-===================================== */
-
-function photoError(
-  img,
-  memberName
-) {
-
-  /*
-    写真が読み込めなかった場合でも
-    画面を壊さない。
-  */
+function photoError(img) {
 
   img.style.display = "none";
 
@@ -1017,7 +1016,7 @@ function photoError(
     img.parentElement;
 
   parent.innerHTML =
-    `<span>${memberName.charAt(0)}</span>`;
+    "📷";
 
 }
 
@@ -1057,6 +1056,7 @@ function showNextGame() {
       finalMatchups[gameNumber];
 
   }
+
 
   document
     .getElementById("members")
@@ -1122,6 +1122,7 @@ function showNextGame() {
 
         };
 
+
       element.innerHTML = `
 
         ${createPhotoHTML(
@@ -1138,6 +1139,7 @@ function showNextGame() {
         </div>
 
       `;
+
 
       document
         .getElementById("members")
@@ -1193,6 +1195,7 @@ function toggleMember(
       .add("selected");
 
   }
+
 
   document
     .getElementById("nextButton")
