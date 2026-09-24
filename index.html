@@ -261,10 +261,6 @@ h1 {
 <main class="container">
 
 
-<!-- =========================
-     START
-========================= -->
-
 <section id="startScreen" class="card screen active">
 
   <div class="small-title">
@@ -297,10 +293,6 @@ h1 {
 </section>
 
 
-<!-- =========================
-     GAME
-========================= -->
-
 <section id="gameScreen" class="card screen">
 
   <div id="progress" class="progress"></div>
@@ -320,10 +312,6 @@ h1 {
 
 </section>
 
-
-<!-- =========================
-     RESULT
-========================= -->
 
 <section id="resultScreen" class="card screen">
 
@@ -363,10 +351,6 @@ h1 {
 
 <script>
 
-
-/* =====================================
-   MEMBERS
-===================================== */
 
 const members = [
 
@@ -448,7 +432,6 @@ const photoFiles = {
   "Latte": "Latte .jpg",
   "Mark": "Mark .jpg",
 
-  /* ★ Max */
   "Max": "Max .jpg",
 
   "Namping": "Namping .jpg",
@@ -456,8 +439,7 @@ const photoFiles = {
   "Nat": "Nat.jpg",
   "Net": "Net .jpg",
   "Nick": "Nick .jpg",
-  
-  /* ★ North */
+
   "North": "North .jpg",
 
   "NuNew": "Nunew .jpg",
@@ -487,7 +469,7 @@ const photoFiles = {
   "Tutor": "Tutor .jpg",
 
   /* ★ Wave */
- "Wave": "Wave .jpg",
+  "Wave": "Wave .jpg",
 
   "Yim": "Yim.jpg",
   "Zee": "Zee.jpg"
@@ -499,48 +481,9 @@ const photoFiles = {
    SETTINGS
 ===================================== */
 
-/*
-   ROUND1
-   47人 × 2回 = 94登場枠
-
-   4人ずつのため、
-   24試合 = 96登場枠。
-
-   最低2回を保証し、
-   余った2枠はランダム追加。
-*/
-
 const ROUND1_GAMES = 24;
-
-
-/*
-   ROUND2
-   ROUND1の結果を使って絞る
-*/
-
 const ROUND2_GAMES = 20;
-
-
-/*
-   ROUND3
-   ROUND1で一度も選ばれなかった人を
-   必ず最低1回登場させる。
-
-   さらにROUND1で2回選ばれた人を
-   メインにする。
-*/
-
 const ROUND3_GAMES = 24;
-
-
-/*
-   ROUND4
-   最終18人を2人対決。
-
-   18人 × 6回 = 108登場枠
-   108 ÷ 2 = 54試合
-*/
-
 const ROUND4_GAMES = 54;
 
 
@@ -663,10 +606,6 @@ function startGame() {
     .add("active");
 
 
-  /*
-     ★ ROUND1の全グループを先に作る
-  */
-
   createRound1Groups();
 
   showNextGame();
@@ -682,10 +621,6 @@ function createRound1Groups() {
 
   let slots = [];
 
-  /*
-     全員2回ずつ
-  */
-
   members.forEach(member => {
 
     slots.push(member);
@@ -693,11 +628,6 @@ function createRound1Groups() {
 
   });
 
-
-  /*
-     94枠 → 96枠にするため
-     ランダムな2人を追加
-  */
 
   const extra =
     shuffle(members).slice(0,2);
@@ -708,10 +638,6 @@ function createRound1Groups() {
 
   });
 
-
-  /*
-     4人グループを作る
-  */
 
   let attempts = 0;
 
@@ -733,11 +659,6 @@ function createRound1Groups() {
 
       const group =
         shuffled.slice(i,i+4);
-
-      /*
-         同じ人が同じ試合に
-         2回入らないようにする
-      */
 
       const names =
         group.map(x => x.name);
@@ -777,9 +698,6 @@ function createRound1Groups() {
 
   }
 
-  /*
-     万一調整できなかった場合の保険
-  */
 
   round1Groups = [];
 
@@ -856,23 +774,12 @@ function createRound2Groups() {
   let pool = [];
 
 
-  /*
-     全員を一度は候補に入れる
-  */
-
   members.forEach(member => {
 
     pool.push(member);
 
   });
 
-
-  /*
-     ROUND1で選ばれた人を追加。
-
-     選ばれた回数が多いほど
-     ROUND2に出やすくする。
-  */
 
   members.forEach(member => {
 
@@ -947,19 +854,11 @@ function createRound2Groups() {
 
 function createRound3Groups() {
 
-  /*
-     ROUND1で一度も選ばれなかった人
-  */
-
   const neverSelected =
     members.filter(member =>
       round1Selected[member.name] === 0
     );
 
-
-  /*
-     ROUND1で2回とも選ばれた人
-  */
 
   const twiceSelected =
     members.filter(member =>
@@ -967,32 +866,15 @@ function createRound3Groups() {
     );
 
 
-  /*
-     まず「未選出メンバー」を
-     必ず1回以上登場させる。
-
-     24試合 × 4人 = 96枠あるので
-     全員保証できる。
-  */
-
   let groups = [];
 
   let forcedSlots =
     shuffle(neverSelected);
 
 
-  /*
-     メイン候補を大量に用意
-  */
-
   let mainPool = [];
 
   twiceSelected.forEach(member => {
-
-    /*
-       2回選ばれた人ほど
-       ROUND3で何度も出やすくする
-    */
 
     for(
       let i = 0;
@@ -1007,11 +889,6 @@ function createRound3Groups() {
   });
 
 
-  /*
-     一度だけ選ばれた人も
-     少しだけ候補に入れる
-  */
-
   members
     .filter(member =>
       round1Selected[member.name] === 1
@@ -1024,11 +901,6 @@ function createRound3Groups() {
     });
 
 
-  /*
-     未選出メンバーも
-     保証分以外では少し登場可能
-  */
-
   neverSelected.forEach(member => {
 
     mainPool.push(member);
@@ -1036,16 +908,8 @@ function createRound3Groups() {
   });
 
 
-  /*
-     96枠を作る
-  */
-
   let slots = [];
 
-
-  /*
-     まず未選出を1回ずつ確保
-  */
 
   forcedSlots.forEach(member => {
 
@@ -1053,10 +917,6 @@ function createRound3Groups() {
 
   });
 
-
-  /*
-     残りをメイン候補中心で埋める
-  */
 
   while(slots.length < ROUND3_GAMES * 4) {
 
@@ -1094,11 +954,6 @@ function createRound3Groups() {
 
   }
 
-
-  /*
-     同じ試合に同じ人が
-     入らないようにする
-  */
 
   for(
     let attempt = 0;
@@ -1147,10 +1002,6 @@ function createRound3Groups() {
   }
 
 
-  /*
-     もし調整できなかった場合
-  */
-
   if(groups.length === 0) {
 
     const backup =
@@ -1181,13 +1032,6 @@ function createRound3Groups() {
 ===================================== */
 
 function createFinal18() {
-
-  /*
-     ROUND1で2回選ばれた人を
-     強く評価。
-
-     ROUND3の選択も加える。
-  */
 
   return [...members]
     .sort((a,b) => {
@@ -1226,10 +1070,6 @@ function createRound4Matches() {
   let slots = [];
 
 
-  /*
-     18人全員6回
-  */
-
   final18.forEach(member => {
 
     for(
@@ -1244,10 +1084,6 @@ function createRound4Matches() {
 
   });
 
-
-  /*
-     同じ人同士にならないようにする
-  */
 
   for(
     let attempt = 0;
@@ -1301,10 +1137,6 @@ function createRound4Matches() {
 
   }
 
-
-  /*
-     保険
-  */
 
   let matches = [];
 
@@ -1584,10 +1416,6 @@ function toggleMember(
 function confirmSelection() {
 
 
-  /* ===============================
-     ROUND 1
-  =============================== */
-
   if(round === 1) {
 
     selected.forEach(index => {
@@ -1626,10 +1454,6 @@ function confirmSelection() {
   }
 
 
-  /* ===============================
-     ROUND 2
-  =============================== */
-
   if(round === 2) {
 
     selected.forEach(index => {
@@ -1667,10 +1491,6 @@ function confirmSelection() {
 
   }
 
-
-  /* ===============================
-     ROUND 3
-  =============================== */
 
   if(round === 3) {
 
@@ -1715,10 +1535,6 @@ function confirmSelection() {
 
   }
 
-
-  /* ===============================
-     ROUND 4
-  =============================== */
 
   if(round === 4) {
 
